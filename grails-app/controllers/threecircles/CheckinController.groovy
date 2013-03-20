@@ -18,7 +18,7 @@ class CheckinController {
     def list() {
       params.max = Math.min(params.max ? params.int('max') : 10, 100)
       render Checkin.list(params) as JSON
-}
+    }
 
     def save() {
       def jsonObject = JSON.parse(params.checkin)

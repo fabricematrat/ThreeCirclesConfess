@@ -31,7 +31,7 @@ grails.mobile.mvc.model = function (items) {
     that.createdItem = grails.mobile.event(that);
     that.updatedItem = grails.mobile.event(that);
     that.deletedItem = grails.mobile.event(that);
-
+    that.logged = grails.mobile.event(that);
     that.getItems = function () {
         return that.items;
     };
@@ -54,6 +54,14 @@ grails.mobile.mvc.model = function (items) {
         if (notifyView) {
             that.listedItems.notify({'items': that.items});
         }
+    };
+
+    that.login = function (item, context) {
+        that.logged.notify({item: item}, context);
+        if (item.errors || item.message) {
+            return false;
+        }
+        return true;
     };
 
     that.createItem = function (item, context) {

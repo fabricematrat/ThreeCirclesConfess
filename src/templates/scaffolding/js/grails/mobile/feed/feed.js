@@ -41,7 +41,9 @@ grails.mobile.feed.feed = function (baseUrl, store) {
         that.setOnline = function () {
         };
     }
-
+    that.login = function (data, created) {
+        currentFeed.login(data, created);
+    };
     that.listItems = function (listed) {
         currentFeed.listItems(listed);
     };

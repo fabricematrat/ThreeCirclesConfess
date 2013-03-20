@@ -61,7 +61,7 @@ threecirclesconfess.view.checkinview = function (model, elements) {
             if (!data.item.NOTIFIED) {
                 $.mobile.changePage($('#section-list-checkin'));
             }
-		}
+        }
     });
 
     that.model.updatedItem.attach(function (data, event) {
@@ -161,26 +161,26 @@ threecirclesconfess.view.checkinview = function (model, elements) {
             value = element['owner'];
         }
         if (!value || (value === Object(value))) {
-           value = element.owner.id;
+            value = element.owner.id;
         }
         $('select[data-gorm-relation="many-to-one"][name="owner"]').val(value).trigger("change");
-        
+
         var value = element['place.id'];
         if (!value) {
             value = element['place'];
         }
         if (!value || (value === Object(value))) {
-           value = element.place.id;
+            value = element.place.id;
         }
         $('select[data-gorm-relation="many-to-one"][name="place"]').val(value).trigger("change");
-        
+
         var commentsSelected = element.comments;
         $.each(commentsSelected, function (key, value) {
             var selector;
             if (value === Object(value)) {
-              selector= '#checkbox-comments-' + value.id;
+                selector= '#checkbox-comments-' + value.id;
             } else {
-              selector= '#checkbox-comments-' + value;
+                selector= '#checkbox-comments-' + value;
             }
             $(selector).attr('checked','checked').checkboxradio('refresh');
         });
@@ -188,9 +188,9 @@ threecirclesconfess.view.checkinview = function (model, elements) {
         $.each(friendsSelected, function (key, value) {
             var selector;
             if (value === Object(value)) {
-              selector= '#checkbox-friends-' + value.id;
+                selector= '#checkbox-friends-' + value.id;
             } else {
-              selector= '#checkbox-friends-' + value;
+                selector= '#checkbox-friends-' + value;
             }
             $(selector).attr('checked','checked').checkboxradio('refresh');
         });
@@ -225,7 +225,7 @@ threecirclesconfess.view.checkinview = function (model, elements) {
             }
         });
     };
-    
+
 
     var refreshSelectDropDown = function (select, newOptions) {
         var options = null;
@@ -270,7 +270,7 @@ threecirclesconfess.view.checkinview = function (model, elements) {
         });
         refreshMultiChoices(oneToMany, dependentName, options);
     };
-    
+
     var createListItem = function (element) {
         var li, a = $('<a>');
         a.attr({
@@ -292,9 +292,9 @@ threecirclesconfess.view.checkinview = function (model, elements) {
         var html = '<div class="fs-object"><div class="header"><span class="ownerimage" ><img src="http://placehold.it/100x150/8e8"/></span>' +
             '<span class="placeimage" ><img src="http://placehold.it/80x150/e88"/></span>' +
             '<span class="description">' +
-                '<span class="name">' + element.owner.firstname + ' ' + element.owner.lastname  + '</span> at <span class="place">' +
-                element.description + '</span>' +
-                '<span class="address">' + element.address + '</span>' +
+            '<span class="name">' + element.owner.firstname + ' ' + element.owner.lastname  + '</span> at <span class="place">' +
+            element.description + '</span>' +
+            '<span class="address">' + element.place.address + '</span>' +
             '</span></div>';
         $.each(element.friends, function(key, value) {
             html += '<div class="comment">With <span class="name">' + value.firstname +

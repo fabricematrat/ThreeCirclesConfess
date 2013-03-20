@@ -30,10 +30,10 @@ class BootStrap {
         mathieu.save()
         UserRole.create mathieu, userRole, true
 
-        Place nice = new Place(name: "Nice", latitude:43.7, longitude: 7.2 )
+        Place nice = new Place(name: "Nice", latitude:43.7, longitude: 7.2, address: "town center" )
         nice.save()
 
-        Place paris = new Place(name: "Paris", latitude:48.8, longitude: 2.3 )
+        Place paris = new Place(name: "Paris", latitude:48.8, longitude: 2.3, address:  "13 rue richard lenoir" )
         paris.save()
 
         testUser.addToFriends(fabrice)
@@ -46,7 +46,7 @@ class BootStrap {
             Cool to meet female speaker""", user: testUser)
         comment2.save()
 
-        Checkin confess = new Checkin(description: "confess", when: new Date(), place: paris, owner: testUser)
+        Checkin confess = new Checkin(description: "confess", when: new Date(), place: nice, owner: testUser)
         confess.save()
         confess.addToFriends(fabrice)
         confess.save()
