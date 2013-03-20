@@ -3,15 +3,20 @@ package threecircles
 class User {
 
 	transient springSecurityService
-
+    String firstname
+    String lastname
 	String username
 	String password
 	boolean enabled
+
+
 	boolean accountExpired
 	boolean accountLocked
 	boolean passwordExpired
 
-	static constraints = {
+	static hasMany = [friends:User]
+
+    static constraints = {
 		username blank: false, unique: true
 		password blank: false
 	}

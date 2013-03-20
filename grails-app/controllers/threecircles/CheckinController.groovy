@@ -1,6 +1,7 @@
 package threecircles
 
-import grails.plugins.springsecurity.Secured
+
+
 import grails.converters.JSON
 import org.grails.datastore.mapping.validation.ValidationErrors
 import org.springframework.dao.DataIntegrityViolationException
@@ -16,16 +17,29 @@ class CheckinController {
 	
     def list() {
       params.max = Math.min(params.max ? params.int('max') : 10, 100)
-      
       render Checkin.list(params) as JSON
-      
     }
-    @Secured(['ROLE_USER'])
+
     def save() {
       def jsonObject = JSON.parse(params.checkin)
       
+      def comments = []
+      jsonObject.comments.each() {
+         comments << Comment.get(it.id)
+      }
+      jsonObject.comments = null
+      
+      def friends = []
+      jsonObject.friends.each() {
+         friends << User.get(it.id)
+      }
+      jsonObject.friends = null
+      
       Checkin checkinInstance = new Checkin(jsonObject)
       
+      checkinInstance.comments = comments
+      
+      checkinInstance.friends = friends
       
       if (!checkinInstance.save(flush: true)) {
         ValidationErrors validationErrors = checkinInstance.errors
@@ -35,7 +49,6 @@ class CheckinController {
       
       event topic:"save-checkin", data: checkinInstance
       render checkinInstance as JSON
-      
     }
     
     def show() {
@@ -47,7 +60,6 @@ class CheckinController {
       }
       
       render checkinInstance as JSON
-      
     }
 
     def update() {
@@ -73,15 +85,24 @@ class CheckinController {
         }
       }
 
+      Checkin checkinReceived = new Checkin(jsonObject)
+
       new DefaultGrailsDomainClass(Checkin.class).persistentProperties.each() {
           if (it.oneToOne || it.embedded) {
             checkinInstance[it.name] = it.type.get(jsonObject["${it.name}.id"])
           } else {
-            checkinInstance[it.name] = jsonObject[it.name]
+            checkinInstance[it.name] = checkinReceived[it.name]
           }
       }
       
-      
+      checkinInstance.comments = []
+      jsonObject.comments.each() {
+        checkinInstance.comments << Comment.get(it.id)
+      }
+      checkinInstance.friends = []
+      jsonObject.friends.each() {
+        checkinInstance.friends << User.get(it.id)
+      }
       if (!checkinInstance.save(flush: true)) {
         ValidationErrors validationErrors = checkinInstance.errors
         render validationErrors as JSON
@@ -90,11 +111,18 @@ class CheckinController {
       
       event topic:"update-checkin", data: checkinInstance
       render checkinInstance as JSON
-      
     }
 
     def delete() {
       def checkinInstance = Checkin.get(params.id)
+      
+      checkinInstance.comments.each() {
+        Comment.get(it.getId());
+      }
+      
+      checkinInstance.friends.each() {
+        User.get(it.getId());
+      }
       
       if (!checkinInstance) {
         flash.message = message(code: 'default.not.found.message', args: [message(code: 'checkin.label', default: 'Checkin'), params.id])
@@ -109,12 +137,9 @@ class CheckinController {
         render flash as JSON
         return
       }
-
       
       event topic:"delete-checkin", data: checkinInstance
       render checkinInstance as JSON
-      
     }
-
     
 }

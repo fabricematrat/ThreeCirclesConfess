@@ -30,15 +30,34 @@
     <script src="js/grails/mobile/sync/syncmanager.js"></script>
     <script src="js/grails/mobile/push/pushmanager.js"></script>
     <script src="js/grails/mobile/mvc/manager.js"></script>
-    <script src="js/threecircles/view/user-view.js"></script>
-    <script src="js/threecircles/configuration-bootstrap.js"></script>
-    <script src="js/threecircles/bootstrap/user-bootstrap.js"></script>
-    <script src="js/threecircles/manager-bootstrap.js"></script>
+    <script src="js/threecirclesconfess/view/user-view.js"></script>
+    <script src="js/threecirclesconfess/view/user-view.js"></script>
+    <script src="js/threecirclesconfess/configuration-bootstrap.js"></script>
+    <script src="js/threecirclesconfess/bootstrap/user-bootstrap.js"></script>
+    <script src="js/threecirclesconfess/bootstrap/user-bootstrap.js"></script>
+    <script src="js/threecirclesconfess/manager-bootstrap.js"></script>
     <script src="js/jquery/jquery.mobile-1.3.0.min.js"></script>
     <script src="js/jquery/mobiscroll.custom-2.4.4.min.js"></script>
 </head>
 <body>
-
+<section data-role="page" id="section-list-user">
+    <div data-role="header" data-position="fixed">
+        <a href="index.html" data-transition="slide" data-icon="arrow-l">Back</a>
+        <h1>User</h1>
+    </div>
+    <div data-role="content" id="list-user-parent">
+        <ul data-role="listview" data-inset="true" data-filter="true" id="list-user"/>
+    </div>
+    <div data-role="footer" data-position="fixed">
+        <div data-role="navbar">
+            <ul>
+                <li>
+                    <a data-transition="slide" data-role="button" data-icon="plus" id="add-user">Add</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>
 <section data-role="page" id="section-show-user">
     <div data-role="header" id="show-user" data-position="fixed">
         <a href="#section-list-user" data-transition="slide" data-icon="arrow-l">Cancel</a>
@@ -47,14 +66,49 @@
     <form id="form-update-user" name="form-update-user">
         <ul data-role="listview" data-inset="true">
             <li data-role="fieldcontain">
-                <label for="input-user-username">Username</label>
-                <input type="text" class="validate[required]" name="username" id="input-user-username" value=""/>
+                <label for="input-user-accountExpired">Account Expired</label>
+                <input type="checkbox" class="validate[required]" name="accountExpired" id="input-user-accountExpired" value=""/>
+                
+            </li>
+            <li data-role="fieldcontain">
+                <label for="input-user-accountLocked">Account Locked</label>
+                <input type="checkbox" class="validate[required]" name="accountLocked" id="input-user-accountLocked" value=""/>
+                
+            </li>
+            <li data-role="fieldcontain">
+                <label for="input-user-enabled">Enabled</label>
+                <input type="checkbox" class="validate[required]" name="enabled" id="input-user-enabled" value=""/>
+                
+            </li>
+            <li data-role="fieldcontain">
+                <label for="input-user-firstname">Firstname</label>
+                <input type="text" class="validate[required]" name="firstname" id="input-user-firstname" value=""/>
+                
+            </li>
+            <li data-role="fieldcontain">
+                <label for="input-user-lastname">Lastname</label>
+                <input type="text" class="validate[required]" name="lastname" id="input-user-lastname" value=""/>
                 
             </li>
             <li data-role="fieldcontain">
                 <label for="input-user-password">Password</label>
-                <input type="password" class="validate[required]" name="password" id="input-user-password" value=""/>
+                <input type="text" class="validate[required]" name="password" id="input-user-password" value=""/>
                 
+            </li>
+            <li data-role="fieldcontain">
+                <label for="input-user-passwordExpired">Password Expired</label>
+                <input type="checkbox" class="validate[required]" name="passwordExpired" id="input-user-passwordExpired" value=""/>
+                
+            </li>
+            <li data-role="fieldcontain">
+                <label for="input-user-username">Username</label>
+                <input type="text" class="validate[required]" name="username" id="input-user-username" value=""/>
+                
+            </li>
+            <li>
+                <label for="multichoice-friends" class="select">Choose some friends</label>
+                <fieldset id="multichoice-friends" data-gorm-relation="one-to-many" data-role="controlgroup">
+                </fieldset>
             </li>
         </ul>
         <input type="hidden" name="id" id="input-user-id"/>
@@ -65,7 +119,10 @@
         <div data-role="navbar">
             <ul>
                 <li>
-                    <a data-transition="slide" data-role="button" data-icon="save" id="submit-user">Login</a>
+                    <a data-transition="slide" data-role="button" data-icon="delete" id="delete-user">Delete</a>
+                </li>
+                <li>
+                    <a data-transition="slide" data-role="button" data-icon="save" id="submit-user">Save</a>
                 </li>
             </ul>
         </div>

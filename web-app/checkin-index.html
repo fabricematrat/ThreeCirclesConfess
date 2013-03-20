@@ -30,37 +30,27 @@
     <script src="js/grails/mobile/sync/syncmanager.js"></script>
     <script src="js/grails/mobile/push/pushmanager.js"></script>
     <script src="js/grails/mobile/mvc/manager.js"></script>
-
-
-    <script src="js/threecircles/view/user-view.js"></script>
-    <script src="js/threecircles/view/checkin-view.js"></script>
-
-
-
-
-    <script src="js/threecircles/configuration-bootstrap.js"></script>
-    <script src="js/threecircles/bootstrap/checkin-bootstrap.js"></script>
-    <script src="js/threecircles/manager-bootstrap.js"></script>
+    <script src="js/threecirclesconfess/view/user-view.js"></script>
+    <script src="js/threecirclesconfess/view/place-view.js"></script>
+    <script src="js/threecirclesconfess/view/comment-view.js"></script>
+    <script src="js/threecirclesconfess/view/user-view.js"></script>
+    <script src="js/threecirclesconfess/view/checkin-view.js"></script>
+    <script src="js/threecirclesconfess/configuration-bootstrap.js"></script>
+    <script src="js/threecirclesconfess/bootstrap/checkin-bootstrap.js"></script>
+    <script src="js/threecirclesconfess/bootstrap/user-bootstrap.js"></script>
+    <script src="js/threecirclesconfess/bootstrap/place-bootstrap.js"></script>
+    <script src="js/threecirclesconfess/bootstrap/comment-bootstrap.js"></script>
+    <script src="js/threecirclesconfess/bootstrap/user-bootstrap.js"></script>
+    <script src="js/threecirclesconfess/manager-bootstrap.js"></script>
     <script src="js/jquery/jquery.mobile-1.3.0.min.js"></script>
     <script src="js/jquery/mobiscroll.custom-2.4.4.min.js"></script>
 </head>
 <body>
 <section data-role="page" id="section-list-checkin">
     <div data-role="header" data-position="fixed">
-        <a  class="ui-btn-left" href="index.html" data-transition="slide" data-icon="arrow-l">Back</a>
+        <a href="index.html" data-transition="slide" data-icon="arrow-l">Back</a>
         <h1>Checkin</h1>
-
-
-        <!--<a class="ui-btn-left" rel="external" href="https://github.com/3musket33rs">-->
-            <!--<img src="images/github-icon.png" />-->
-        <!--</a>-->
-        <!--<h1>-->
-            <!--Powered by us (-->
-            <!--<a href="mailto:th33musk3t33rs@gmail.com">th33musk3t33rs@gmail.com</a>-->
-            <!--)-->
-        <!--</h1>-->
         <a id="login" class="ui-btn-right" href="#section-show-user">Loginme</a>
-
     </div>
     <div data-role="content" id="list-checkin-parent">
         <ul data-role="listview" data-inset="true" data-filter="true" id="list-checkin"/>
@@ -75,7 +65,6 @@
         </div>
     </div>
 </section>
-
 <section data-role="page" id="section-show-checkin">
     <div data-role="header" id="show-checkin" data-position="fixed">
         <a href="#section-list-checkin" data-transition="slide" data-icon="arrow-l">Cancel</a>
@@ -84,9 +73,40 @@
     <form id="form-update-checkin" name="form-update-checkin">
         <ul data-role="listview" data-inset="true">
             <li data-role="fieldcontain">
-                <label for="input-checkin-desciption">Desciption</label>
-                <input type="text" class="validate[required]" name="desciption" id="input-checkin-desciption" value=""/>
+                <label for="input-checkin-description">Description</label>
+                <input type="text" class="validate[required]" name="description" id="input-checkin-description" value=""/>
                 
+            </li>
+            <li data-role="fieldcontain">
+                <div data-role="fieldcontain">
+                    <label for="select-checkin-owner" class="select">Choose a User</label>
+                    <select name="owner" data-gorm-relation="many-to-one" id="select-checkin-owner" data-native-menu="false">
+                        <option value="0"></option>
+                    </select>
+                </div>
+            </li>
+            <li data-role="fieldcontain">
+                <div data-role="fieldcontain">
+                    <label for="select-checkin-place" class="select">Choose a Place</label>
+                    <select name="place" data-gorm-relation="many-to-one" id="select-checkin-place" data-native-menu="false">
+                        <option value="0"></option>
+                    </select>
+                </div>
+            </li>
+            <li data-role="fieldcontain">
+                <label for="input-checkin-when">When</label>
+                <input type="text" data-type="date" class="validate[required]" name="when" id="input-checkin-when" value=""/>
+                
+            </li>
+            <li>
+                <label for="multichoice-comments" class="select">Choose some comments</label>
+                <fieldset id="multichoice-comments" data-gorm-relation="one-to-many" data-role="controlgroup">
+                </fieldset>
+            </li>
+            <li>
+                <label for="multichoice-friends" class="select">Choose some friends</label>
+                <fieldset id="multichoice-friends" data-gorm-relation="one-to-many" data-role="controlgroup">
+                </fieldset>
             </li>
         </ul>
         <input type="hidden" name="id" id="input-checkin-id"/>
@@ -106,7 +126,6 @@
         </div>
     </div>
 </section>
-
 
 <section data-role="page" id="section-show-user">
     <div data-role="header" id="show-user" data-position="fixed">
