@@ -2,7 +2,7 @@ package threecircles
 
 
 
-import grails.converters.JSON
+import grails.converters.deep.JSON
 import org.grails.datastore.mapping.validation.ValidationErrors
 import org.springframework.dao.DataIntegrityViolationException
 import org.codehaus.groovy.grails.commons.DefaultGrailsDomainClass
@@ -18,7 +18,7 @@ class CheckinController {
     def list() {
       params.max = Math.min(params.max ? params.int('max') : 10, 100)
       render Checkin.list(params) as JSON
-    }
+}
 
     def save() {
       def jsonObject = JSON.parse(params.checkin)
