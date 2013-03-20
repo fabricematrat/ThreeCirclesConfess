@@ -40,7 +40,6 @@ threecirclesconfess.view.checkinview = function (model, elements) {
     // Register events
     that.model.listedItems.attach(function (data) {
         $('#list-checkin-parent').empty();
-//        $('#list-checkin-parent').append('<div>dsddsd</div>').trigger("create");
         var key, items = model.getItems();
         $.each(items, function(key, value) {
             renderElementCustom(value);
@@ -290,21 +289,19 @@ threecirclesconfess.view.checkinview = function (model, elements) {
     };
 
     var createListItemCustom = function (element) {
-        var html = '<div class="fs-object"></div><div class="header"><span class="ownerimage" ><img src="http://placehold.it/100x150/8e8"/></span>' +
+        var html = '<div class="fs-object"><div class="header"><span class="ownerimage" ><img src="http://placehold.it/100x150/8e8"/></span>' +
             '<span class="placeimage" ><img src="http://placehold.it/80x150/e88"/></span>' +
             '<span class="description">' +
                 '<span class="name">' + element.owner.firstname + ' ' + element.owner.lastname  + '</span> at <span class="place">' +
-                element.description + '</span>'
+                element.description + '</span>' +
                 '<span class="address">' + element.address + '</span>' +
             '</span></div>';
-//        $.each(element.friends, function(key, value) {
-//            html += '<div class="comment">With <span class="name">' + value.firstname +
-//                '</span></div><img class="mainimage" src="http://placehold.it/640x480/88e" />' +
-//        <span class="date">Yesterday</span><!--
-//                    --><a class="commentbutton"><img src="img/comments.png"/></a><!--
-//                    --><a class="likebutton"><img src="img/like.png"/></a>
-//    </div>"
-//        });
+        $.each(element.friends, function(key, value) {
+            html += '<div class="comment">With <span class="name">' + value.firstname +
+                '</span></div><img class="mainimage" src="http://placehold.it/640x480/88e" />' +
+                '<span class="date">Yesterday</span><a class="commentbutton"><img src="img/comments.png"/></a><a class="likebutton"><img src="img/like.png"/></a>' +
+                '</div>';
+        });
 
         return html;
 //        <div class="comment">
