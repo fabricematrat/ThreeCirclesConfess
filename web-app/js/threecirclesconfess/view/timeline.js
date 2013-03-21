@@ -7,6 +7,8 @@ threecirclesconfess.view.timeline = function () {
     var ONE_DAY = 86400000;
     var ONE_MINUTE = 60000;
     var ONE_HOUR = 3600000;
+    var ONE_MONTH = 30 * ONE_DAY;
+    var ONE_YEAR = 12 * ONE_MONTH;
 
     that.revisitTimeInformation = function(item) {
         //$.each(model.getItems(), function(key, value) {
@@ -38,13 +40,21 @@ threecirclesconfess.view.timeline = function () {
                 return minutes.quotient + " minutes ago";
             }
         }
-        if (ONE_DAY < diff && diff < 30 * ONE_DAY) {
+        if (ONE_DAY < diff && diff < ONE_MONTH) {
             var days = integerDivision(diff, ONE_DAY);
             if (days) {
                 return days.quotient + " days ago";
             }
         }
-        return "some time ago";
+
+        if (ONE_MONTH < diff && diff < ONE_YEAR) {
+            var months = integerDivision(diff, ONE_MONTH);
+            if (months) {
+                return months.quotient + " months ago";
+            }
+        }
+
+        return "over a year ago";
     }
 
     var integerDivision = function (numerator, denominator) {

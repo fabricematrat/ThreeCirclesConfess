@@ -46,20 +46,28 @@ class BootStrap {
             Cool to meet female speaker""", user: testUser)
         comment2.save()
 
-        Checkin confess = new Checkin(description: "confess", when: new Date() - 25, place: nice, owner: testUser)
+        Checkin confess = new Checkin(description: "confess", when: new Date(), place: nice, owner: testUser)
         confess.save()
         confess.addToFriends(fabrice)
         confess.save()
 
 
-
-        Checkin devfestw = new Checkin(description: "devfestw", when: new Date(), place: paris, owner: testUser)
+        Checkin devfestw = new Checkin(description: "devfestw", when: new Date() - 25, place: paris, owner: testUser)
         devfestw.save()
         devfestw.addToFriends(fabrice)
         devfestw.addToComments(comment)
         devfestw.addToComments(comment2)
 
         devfestw.save()
+
+        Checkin greach = new Checkin(description: "greach", when: new Date() - 69, place: paris, owner: testUser)
+        greach.save()
+        greach.addToFriends(fabrice)
+        greach.addToComments(comment)
+        greach.addToComments(comment2)
+
+        greach.save()
+
     }
 
     def destroy = {
