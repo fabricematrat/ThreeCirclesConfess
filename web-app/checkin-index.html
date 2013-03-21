@@ -35,6 +35,7 @@
 
 
     <script src="js/threecirclesconfess/view/timeline.js"></script>
+    <script src="js/threecirclesconfess/view/geolocation.js"></script>
 
     <script src="js/threecirclesconfess/view/user-view.js"></script>
     <script src="js/threecirclesconfess/view/place-view.js"></script>
@@ -108,60 +109,12 @@
                 <li><img src="img/ico-fire.png" />First Bar in 2 months!</li>
             </ul>
         </div>
-
-
-        <!--<div class="fs-object">-->
-        <!--<div class="header">-->
-        <!--<span class="ownerimage"><img src="http://placehold.it/100x150/8e8" /></span>-->
-        <!--<span class="placeimage"><img src="http://placehold.it/80x150/e88" /></span>-->
-        <!--<span class="description">-->
-        <!--<span class="name">Corinne Krych</span> at <span class="place">The Green King</span>-->
-        <!--<span class="address">Avenue Roumanille</span>-->
-        <!--</span>-->
-        <!--</div>-->
-        <!--<div class="comment">-->
-        <!--With <span class="name">Fabrice</span>-->
-        <!--</div>-->
-        <!--<span class="date">Yesterday</span>&lt;!&ndash;-->
-        <!--&ndash;&gt;<a class="commentbutton"><img src="img/comments.png"/></a>&lt;!&ndash;-->
-        <!--&ndash;&gt;<a class="likebutton"><img src="img/like.png"/></a>-->
-        <!--</div>-->
-
-        <!--<ul class="fs-list">-->
-        <!--<li><img src="img/ico-fire.png" />Back here after 5 months.</li>-->
-        <!--<li><img src="img/ico-fire.png" />First Bar in 2 months!</li>-->
-        <!--</ul>-->
-
-        <!--<div class="fs-object">-->
-        <!--<div class="newfriend">-->
-        <!--<img src="img/friends.png" />-->
-        <!--<span class="name">Corinne Krych</span> <span>is now friend with</span>-->
-        <!--<span class="name">Fabrice Matrat</span>-->
-        <!--</div>-->
-        <!--</div>-->
-
-        <!--<div class="fs-object">-->
-        <!--<div class="header">-->
-        <!--<span class="ownerimage"><img src="http://placehold.it/100x150/8e8" /></span>-->
-        <!--<span class="description">-->
-        <!--<span class="name">Corinne Krych</span> unlock Newbie at-->
-        <!--<span class="address">Parfumerie Gallimard</span>-->
-        <!--</span>-->
-        <!--</div>-->
-        <!--<span class="alone">hier</span>-->
-        <!--</div>-->
-
-        <!--<ul class="fs-list">-->
-        <!--<li><img src="img/ico-fire.png" />Back here after 5 months.</li>-->
-        <!--<li><img src="img/ico-fire.png" />First Bar in 2 months!</li>-->
-        <!--</ul>-->
-
     </div>
     <div id="Footer" data-theme="a" data-role="footer" data-position="fixed">
         <div id="navbar-footer" data-role="navbar" data-iconpos="top">
             <ul>
                 <li style="width: 20%;">
-                    <a id="add-checkin" href="#find" data-transition="fade" data-theme="b" data-icon="edit" data-role="button" data-iconpos="top">
+                    <a id="add-checkin" href="#section-show-checkin" data-transition="fade" data-theme="b" data-icon="edit" data-role="button" data-iconpos="top">
                         Check In</br>
                     </a>
                 </li>
@@ -171,11 +124,6 @@
         </div>
     </div>
 </div>
-
-
-
-
-
 
 <!--
 <section data-role="page" id="section-list-checkin">
@@ -198,6 +146,55 @@
     </div>
 </section>
 -->
+
+<div data-role="page" id="section-show-checkin" data-theme="c">
+    <div data-role="header" data-position="fixed" data-theme="a">
+        <a href="#section-list-checkin" data-transition="slide" data-role="button" data-icon="arrow-l" data-iconpos="notext"></a>
+        <h1>Check In</h1>
+    </div>
+    <div data-role="content">
+        <div id="map_canvas2" class="map"></div>
+        <ul class="list-place" style="border-radius: 0 0 0 0 !important; " data-role="listview" data-filter="true" data-theme="c" id="list-place">
+        </ul>
+    </div>
+</div>
+
+
+<!--<div data-role="page" id="section-show-checkin-final" data-theme="a">-->
+    <!--<div data-role="header" data-position="fixed" data-theme="b">-->
+        <!--<a href="#section-list-checkin" data-transition="slide" data-role="button" data-icon="arrow-l" data-iconpos="notext"></a>-->
+        <!--<h1>Check In</h1>-->
+    <!--</div>-->
+    <!--<div data-role="content">-->
+        <!--<div id="map_canvas3" class="big-map"></div>-->
+        <!--<div style="display: table;padding:2em;">-->
+                    <!--<span style="display: table-cell;">-->
+                        <!--<label for="flip-1">Private</label>-->
+                        <!--<select name="flip-1" id="flip-1" data-role="slider">-->
+                            <!--<option value="off">Off</option>-->
+                            <!--<option value="on">On</option>-->
+                        <!--</select>-->
+                    <!--</span>-->
+                    <!--<span style="display: table-cell;padding-left: 15em;">-->
+                        <!--<label for="flip-2">Twitter</label>-->
+                        <!--<select name="flip-2" id="flip-2" data-role="slider">-->
+                            <!--<option value="off">Off</option>-->
+                            <!--<option value="on">On</option>-->
+                        <!--</select>-->
+                    <!--</span>-->
+                    <!--<span style="display: table-cell;padding-left:1em">-->
+                        <!--<label for="flip-3">Facebook</label>-->
+                        <!--<select name="flip-3" id="flip-3" data-role="slider">-->
+                            <!--<option value="off">Off</option>-->
+                            <!--<option value="on">On</option>-->
+                        <!--</select>-->
+                    <!--</span>-->
+        <!--</div>-->
+        <!--<button data-theme="e">Check in Here</button>-->
+    <!--</div>-->
+<!--</div>-->
+
+<!--
 <section data-role="page" id="section-show-checkin">
     <div data-role="header" id="show-checkin" data-position="fixed">
         <a href="#section-list-checkin" data-transition="slide" data-icon="arrow-l">Cancel</a>
@@ -226,11 +223,6 @@
                     </select>
                 </div>
             </li>
-            <!--<li data-role="fieldcontain">-->
-                <!--<label for="input-checkin-when">When</label>-->
-                <!--<input type="text" data-type="date" class="validate[required]" name="when" id="input-checkin-when" value=""/>-->
-
-            <!--</li>-->
             <li>
                 <label for="multichoice-comments" class="select">Choose some comments</label>
                 <fieldset id="multichoice-comments" data-gorm-relation="one-to-many" data-role="controlgroup">
@@ -259,7 +251,7 @@
         </div>
     </div>
 </section>
-
+ -->
 <section data-role="page" id="section-show-user">
     <div data-role="header" id="show-user" data-position="fixed">
         <a href="#section-list-checkin" data-transition="slide" data-icon="arrow-l">Cancel</a>

@@ -5,6 +5,7 @@ threecirclesconfess.view.checkinview = function (model, elements) {
 
     var that = grails.mobile.mvc.view(model, elements);
     var timeline = threecirclesconfess.view.timeline();
+    var geolocation = threecirclesconfess.view.geolocation();
 
     that.model.logged.attach(function (data, event) {
         if (data.item.errors) {
@@ -42,9 +43,13 @@ threecirclesconfess.view.checkinview = function (model, elements) {
     that.model.listedItems.attach(function (data) {
         $('#list-checkin-parent').empty();
         var key, items = model.getItems();
+        //$.each($(collection).get().reverse(), callback func() {});
+        //jQuery.fn.reverse = [].reverse;
+        //$(items).reverse().each(function (key, value) {
+        //var arr - $.makeArray(obj);
         $.each(items, function(key, value) {
-            var whenInfo = timeline.getWhenInformation(value.when)
-            renderElementCustom(value, whenInfo);
+            var whenInfo = timeline.getWhenInformation(this.when)
+            renderElementCustom(this, whenInfo);
         });
         $('#list-checkin-parent').trigger("create");
     });
@@ -137,8 +142,8 @@ threecirclesconfess.view.checkinview = function (model, elements) {
 
     that.elements.add.live('click tap', function (event) {
         event.stopPropagation();
-        $('#form-update-checkin').validationEngine('hide');
-        $('#form-update-checkin').validationEngine({promptPosition: 'bottomLeft'});
+        //$('#form-update-checkin').validationEngine('hide');
+        //$('#form-update-checkin').validationEngine({promptPosition: 'bottomLeft'});
         that.editButtonClicked.notify();
         createElement();
     });
@@ -152,10 +157,16 @@ threecirclesconfess.view.checkinview = function (model, elements) {
     });
 
     var createElement = function () {
-        resetForm('form-update-checkin');
+        //resetForm('form-update-checkin');
+        geolocation.showMap('map_canvas2', false, "list-place");
         $.mobile.changePage($('#section-show-checkin'));
-        $('#delete-checkin').css('display', 'none');
+        //$('#delete-checkin').css('display', 'none');
     };
+
+    $("#section-show-checkin-final").live( "pageshow", function (event) {
+            showMap('map_canvas3', true);
+        }
+    );
 
     var showElement = function (id) {
         resetForm('form-update-checkin');
@@ -222,7 +233,9 @@ threecirclesconfess.view.checkinview = function (model, elements) {
             });
         });
         var div = $("#" + form);
-        $("#" + form)[0].reset();
+        if ($("#" + form)[0]) {
+            $("#" + form)[0].reset();
+        }
         $.each(div.find('input:hidden'), function(id, input) {
             if ($(input).attr('type') != 'file') {
                 $(input).val('');
@@ -238,11 +251,13 @@ threecirclesconfess.view.checkinview = function (model, elements) {
         } else {
             options = select.attr('options');
         }
-        $('option', select).remove();
-        $.each(newOptions, function(val, text) {
-            options[options.length] = new Option(text, val);
-        });
-        select.val(options[0]);
+        if (options) {
+            $('option', select).remove();
+            $.each(newOptions, function(val, text) {
+                options[options.length] = new Option(text, val);
+            });
+            select.val(options[0]);
+        }
     };
 
     var renderDependentList = function (dependentName, items) {
