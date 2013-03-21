@@ -163,10 +163,10 @@ threecirclesconfess.view.checkinview = function (model, elements) {
         //$('#delete-checkin').css('display', 'none');
     };
 
-    $("#section-show-checkin-final").live( "pageshow", function (event) {
-            showMap('map_canvas3', true);
-        }
-    );
+//    $("#checkin").live( "pageshow", function (event) {
+//            geolocation.showMap('map_canvas3', true);
+//        }
+//    );
 
     var showElement = function (id) {
         resetForm('form-update-checkin');
