@@ -297,14 +297,19 @@ threecirclesconfess.view.checkinview = function (model, elements) {
             '<span class="placeimage" ><img src="http://placehold.it/80x150/e88"/></span>' +
             '<span class="description">' +
             '<span class="name">' + element.owner.firstname + ' ' + element.owner.lastname  + '</span> at <span class="place">' +
-            element.description + '</span>' +
+            element.place.name + '</span>' +
             '<span class="address">' + element.place.address + '</span>' +
             '</span></div>';
+
+        html += '<div class="comment">' + element.description;
+
         $.each(element.friends, function(key, value) {
-            html += '<div class="comment">With <span class="name">' + value.firstname +
-                '</span></div>';
+            html += '<br/>with <span class="name">' + value.firstname +
+                '</span>';
 
         });
+        html += '</div>';
+
         html += '<img class="mainimage" src="http://placehold.it/640x480/88e" />';
 
         html +='<span class="date">' + timelineDate + '</span><a class="commentbutton"><img src="img/comments.png"/></a><a class="likebutton"><img src="img/like.png"/></a>' +

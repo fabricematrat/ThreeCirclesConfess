@@ -2,7 +2,6 @@ package threecircles
 
 class Checkin {
     String description
-    //String address
     Date when
     Place place
     User owner
