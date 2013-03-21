@@ -46,7 +46,7 @@ class BootStrap {
             Cool to meet female speaker""", user: testUser)
         comment2.save()
 
-        Checkin confess = new Checkin(description: "confess", when: new Date(), place: nice, owner: testUser)
+        Checkin confess = new Checkin(description: "confess", when: new Date() - 25, place: nice, owner: testUser)
         confess.save()
         confess.addToFriends(fabrice)
         confess.save()

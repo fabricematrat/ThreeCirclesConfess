@@ -14,10 +14,8 @@ threecirclesconfess.view.checkinview = function (model, elements) {
             showGeneralMessage(data, event);
         } else {
             if (grails.mobile.helper.getCookie("grails_remember_me")) {//)$.cookie('grails_remember_me')) {
-                //$('#login').text('Logout');
                 $('#login').replaceWith('<a id="login" class="ui-btn-right" href="#section-show-user">Logout</a>');
             } else {
-                //$('#login').text('Login');
                 $('#login').replaceWith('<a id="login" class="ui-btn-right" href="#section-show-user">Login</a>');
             }
             $('#login').button();
@@ -37,12 +35,15 @@ threecirclesconfess.view.checkinview = function (model, elements) {
 
         }
     });
+
     // Register events
     that.model.listedItems.attach(function (data) {
         $('#list-checkin-parent').empty();
         var key, items = model.getItems();
+        var timeline = threecirclesconfess.view.timeline();
         $.each(items, function(key, value) {
-            renderElementCustom(value);
+            var whenInfo = timeline.getWhenInformation(value.when)
+            renderElementCustom(value, whenInfo);
         });
         $('#list-checkin-parent').trigger("create");
     });
@@ -115,6 +116,7 @@ threecirclesconfess.view.checkinview = function (model, elements) {
         $('#form-update-checkin').validationEngine('hide');
         if($('#form-update-checkin').validationEngine('validate')) {
             var obj = grails.mobile.helper.toObject($('#form-update-checkin').find('input, select'));
+            obj.when = new Date();
             var newElement = {
                 checkin: JSON.stringify(obj)
             };
@@ -288,7 +290,7 @@ threecirclesconfess.view.checkinview = function (model, elements) {
         return li;
     };
 
-    var createListItemCustom = function (element) {
+    var createListItemCustom = function (element, timelineDate) {
         var html = '<div class="fs-object"><div class="header"><span class="ownerimage" ><img src="http://placehold.it/100x150/8e8"/></span>' +
             '<span class="placeimage" ><img src="http://placehold.it/80x150/e88"/></span>' +
             '<span class="description">' +
@@ -298,28 +300,22 @@ threecirclesconfess.view.checkinview = function (model, elements) {
             '</span></div>';
         $.each(element.friends, function(key, value) {
             html += '<div class="comment">With <span class="name">' + value.firstname +
-                '</span></div><img class="mainimage" src="http://placehold.it/640x480/88e" />' +
-                '<span class="date">Yesterday</span><a class="commentbutton"><img src="img/comments.png"/></a><a class="likebutton"><img src="img/like.png"/></a>' +
-                '</div>';
-        });
+                '</span></div>';
 
+        });
+        html += '<img class="mainimage" src="http://placehold.it/640x480/88e" />';
+
+        html +='<span class="date">' + timelineDate + '</span><a class="commentbutton"><img src="img/comments.png"/></a><a class="likebutton"><img src="img/like.png"/></a>' +
+        '</div>';
+
+        html += '<ul class="fs-list">' +
+                '<li><img src="img/ico-fire.png" />Back here after 5 months.</li>' +
+                '<li><img src="img/ico-fire.png" />First Bar in 2 months!</li></ul>';
         return html;
-//        <div class="comment">
-//        With <span class="name">Fabrice</span>
-//        </div>
-//        <img class="mainimage" src="http://placehold.it/640x480/88e" />
-//        <span class="date">Yesterday</span><!--
-//                    --><a class="commentbutton"><img src="img/comments.png"/></a><!--
-//                    --><a class="likebutton"><img src="img/like.png"/></a>
-//    </div>
-//
-//    <ul class="fs-list">
-//        <li><img src="img/ico-fire.png" />Back here after 5 months.</li>
-//        <li><img src="img/ico-fire.png" />First Bar in 2 months!</li>
-//    </ul>
     };
-    var renderElementCustom = function (element) {
-        $('#list-checkin-parent').append(createListItemCustom(element)).trigger("create");
+
+    var renderElementCustom = function (element, timelineDate) {
+        $('#list-checkin-parent').append(createListItemCustom(element, timelineDate)).trigger("create");
     };
 
     var renderElement = function (element) {
