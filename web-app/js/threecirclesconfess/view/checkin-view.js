@@ -5,7 +5,8 @@ threecirclesconfess.view.checkinview = function (model, elements) {
 
     var that = grails.mobile.mvc.view(model, elements);
     var timeline = threecirclesconfess.view.timeline();
-    var geolocation = threecirclesconfess.view.geolocation();
+    var geolocationSearch = threecirclesconfess.view.geolocation();
+    var geolocationCheckin = threecirclesconfess.view.geolocation();
 
     that.model.logged.attach(function (data, event) {
         if (data.item.errors) {
@@ -154,19 +155,24 @@ threecirclesconfess.view.checkinview = function (model, elements) {
         $('#form-update-checkin').validationEngine({promptPosition: 'bottomLeft'});
         that.editButtonClicked.notify();
         showElement($(event.currentTarget).attr("data-id"));
-    });
+});
 
     var createElement = function () {
-        //resetForm('form-update-checkin');
-        geolocation.showMap('map_canvas2', false, "list-place");
         $.mobile.changePage($('#section-show-checkin'));
-        //$('#delete-checkin').css('display', 'none');
     };
 
-//    $("#checkin").live( "pageshow", function (event) {
-//            geolocation.showMap('map_canvas3', true);
-//        }
-//    );
+    var storeLatLng = function(lat, lng) {
+        that.latitude = lat;
+        that.longitude = lng;
+    };
+
+    $("#section-show-checkin").live( "pageshow", function (event) {
+        geolocationSearch.showMapWithPlaces('map_canvas2', "list-place", storeLatLng);
+    });
+
+    $("#checkin").live( "pageshow", function (event) {
+        geolocationCheckin.showMap('map_canvas3', that.latitude, that.longitude);
+    });
 
     var showElement = function (id) {
         resetForm('form-update-checkin');
