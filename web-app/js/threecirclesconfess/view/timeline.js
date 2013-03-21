@@ -33,7 +33,7 @@ threecirclesconfess.view.timeline = function () {
         if (TEN_MINUTES <diff && diff < ONE_DAY) {  // between 10 mins to one day
             var minutes = integerDivision(diff, ONE_MINUTE);
             var hours = integerDivision(diff, ONE_HOUR);
-            if (hours) {
+            if (hours.quotient) {
                 var minutesLeft = integerDivision(hours.remainder, ONE_MINUTE);
                 return hours.quotient + " hours " + minutesLeft.quotient + " minutes ago";
             } else {
@@ -42,7 +42,7 @@ threecirclesconfess.view.timeline = function () {
         }
         if (ONE_DAY < diff && diff < ONE_MONTH) {
             var days = integerDivision(diff, ONE_DAY);
-            if (days) {
+            if (days.quotient) {
                 return days.quotient + " days ago";
             }
         }
