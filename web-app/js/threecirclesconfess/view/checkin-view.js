@@ -4,6 +4,8 @@ threecirclesconfess.view = threecirclesconfess.view || {};
 threecirclesconfess.view.checkinview = function (model, elements) {
 
     var that = grails.mobile.mvc.view(model, elements);
+    var timeline = threecirclesconfess.view.timeline();
+
     that.model.logged.attach(function (data, event) {
         if (data.item.errors) {
             $.each(data.item.errors, function(index, error) {
@@ -40,7 +42,6 @@ threecirclesconfess.view.checkinview = function (model, elements) {
     that.model.listedItems.attach(function (data) {
         $('#list-checkin-parent').empty();
         var key, items = model.getItems();
-        var timeline = threecirclesconfess.view.timeline();
         $.each(items, function(key, value) {
             var whenInfo = timeline.getWhenInformation(value.when)
             renderElementCustom(value, whenInfo);
@@ -57,7 +58,7 @@ threecirclesconfess.view.checkinview = function (model, elements) {
         } else if (data.item.message) {
             showGeneralMessage(data, event);
         } else {
-            renderElementCustom(data.item);
+            renderElementCustom(data.item, "just now");
             $('#list-checkin').listview('refresh');
             if (!data.item.NOTIFIED) {
                 $.mobile.changePage($('#section-list-checkin'));
@@ -74,7 +75,8 @@ threecirclesconfess.view.checkinview = function (model, elements) {
         } else if (data.item.message) {
             showGeneralMessage(data, event);
         } else {
-            updateElement(data.item);
+            var whenInfo = timeline.getWhenInformation(data.item.when);
+            updateElementCustom(data.item, whenInfo);
             $('#list-checkin').listview('refresh');
             if (!data.item.NOTIFIED) {
                 $.mobile.changePage($('#section-list-checkin'));
@@ -324,6 +326,10 @@ threecirclesconfess.view.checkinview = function (model, elements) {
 
     var updateElement = function (element) {
         $('#checkin-list-' + element.id).parents('li').replaceWith(createListItem(element));
+    };
+
+    var updateElementCustom = function (element, timelineDate) {
+        $('#checkin-list-' + element.id).parents('li').replaceWith(createListItemCustom(element, timelineDate));
     };
 
     var getText = function (data) {
