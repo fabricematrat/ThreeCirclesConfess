@@ -33,8 +33,14 @@ class BootStrap {
         Place nice = new Place(name: "Nice", latitude:43.7, longitude: 7.2, address: "town center" )
         nice.save()
 
+        Place madrid = new Place(name: "Nice", latitude:40.41973002585687, longitude: -3.7075513757179124, address: "Calle Preciados 37" )
+        madrid.save()
+
         Place paris = new Place(name: "Paris", latitude:48.8, longitude: 2.3, address:  "13 rue richard lenoir" )
         paris.save()
+
+        Place wien = new Place(name: "Wein", latitude:48.217349004974416, longitude: 16.407538767645292, address:  "Messe Wien Exhibition & Congress " )
+        wien.save()
 
         testUser.addToFriends(fabrice)
         testUser.addToFriends(sebastien)
@@ -46,7 +52,7 @@ class BootStrap {
             Cool to meet female speaker""", user: testUser)
         comment2.save()
 
-        Checkin confess = new Checkin(description: "confess", when: new Date(), place: nice, owner: testUser)
+        Checkin confess = new Checkin(description: "confess", when: new Date(), place: wien, owner: testUser)
         confess.save()
         confess.addToFriends(fabrice)
         confess.save()
@@ -60,7 +66,7 @@ class BootStrap {
 
         devfestw.save()
 
-        Checkin greach = new Checkin(description: "greach", when: new Date() - 69, place: paris, owner: testUser)
+        Checkin greach = new Checkin(description: "greach", when: new Date() - 69, place: madrid, owner: testUser)
         greach.save()
         greach.addToFriends(fabrice)
         greach.addToComments(comment)
