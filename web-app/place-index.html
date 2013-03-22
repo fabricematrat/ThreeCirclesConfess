@@ -57,19 +57,21 @@
                 <li class="list-icon">
                     <a href="#mypanel" data-transition="fade" data-role="button" data-icon="bars" class="big">&nbsp;</a>
                 </li>
-                <li class="list-search">
-                    <!--<input data-theme="c" class="search-header" placeholder="Find a place to go"/>-->
+                <li > &nbsp;
                 </li>
-
-                <li data-role="controlgroup" data-type="horizontal" data-mini="true" class="list-icon">
-                    <a data-transition="none" data-role="button"  data-inline="true" data-icon="grid" id="list-all-place">List&nbsp;&nbsp;&nbsp;&nbsp;</a>
-                    <a data-transition="none" data-role="button" data-icon="star" data-iconpos="notext" id="map-all-place">Map&nbsp;&nbsp;&nbsp;</a>
+                <li > &nbsp;
+                </li>
+                <li   class="list-icon">
+                    <a data-transition="none" data-role="button"  data-icon="grid" id="list-all-place">List&nbsp;</a>
+                </li>
+                <li  class="list-icon">
+                    <a data-transition="none" data-role="button" data-icon="star" id="map-all-place">Map&nbsp;</a>
                 </li>
             </ul>
         </div>
     </div>
     <div data-role="content" style="display: none;" id="list-place-parent">
-        <ul data-role="listview" data-inset="true" data-filter="true" id="list-place"/>
+        <ul data-theme="b" class="fs-object" data-role="listview" data-inset="true" data-filter="true" id="list-place"/>
     </div>
     <div data-role="content" id="map-place-parent">
         <div style="height: 70%;width: 91%;position: absolute;" id="map-canvas-list-place"></div>
@@ -95,34 +97,57 @@
         <a href="#section-list-place" data-transition="slide" data-icon="arrow-l">Cancel</a>
         <h1>Place</h1>
     </div>
-    <form id="form-update-place" name="form-update-place">
-        <ul data-role="listview" data-inset="true">
-            <li data-role="fieldcontain">
-                <label for="input-place-address">Address</label>
-                <input type="text" class="validate[required]" name="address" id="input-place-address" value=""/>
-                
-            </li>
-            <li data-role="fieldcontain">
-                <label for="input-place-name">Name</label>
-                <input type="text" class="validate[required]" name="name" id="input-place-name" value=""/>
-                
-            </li>
-        </ul>
-        <input type="hidden" name="longitude" id="input-place-longitude"/>
-        <input type="hidden" name="latitude" id="input-place-latitude"/>
-        <input type="hidden" name="id" id="input-place-id"/>
-        <input type="hidden" name="version" id="input-place-version"/>
-        <input type="hidden" name="class" id="input-place-class"/>
-    </form>
-    <div id="map-canvas-form-place" style="height: 70%;width: 100%;position: absolute;"></div>
-    <div data-role="footer" data-position="fixed">
+
+
+    <div data-role="panel" data-theme="a" id="mypanel2">
+        <a href="index.html" rel="external" data-role="button"  data-icon="home">Timeline</a>
+        <a href="#mypanel2" data-role="button" data-icon="star">Places</a>
+        <a href="user-index.html"  rel="external" data-role="button" data-icon="alert">Friends</a>
+        <a href="#mypanel2" data-role="button" data-icon="grid">Settings</a>
+    </div>
+    <div data-role="header" data-position="fixed" data-theme="b">
+        <div id="navbar2" data-role="navbar" data-iconpos="top">
+            <ul>
+                <li class="list-icon">
+                    <a href="#mypanel2" data-transition="fade" data-role="button" data-icon="bars" class="big">&nbsp;</a>
+                </li>
+                <li>&nbsp;</li>
+                <li><br/>Updating...</li>
+                <li><a href="#section-list-place" data-icon="arrow-l">Cancel</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div data-role="content" >
+        <form id="form-update-place" name="form-update-place">
+            <ul data-role="listview" data-inset="true">
+                <li data-role="fieldcontain">
+                    <label for="input-place-address">Address</label>
+                    <input type="text" class="validate[required]" name="address" id="input-place-address" value=""/>
+
+                </li>
+                <li data-role="fieldcontain">
+                    <label for="input-place-name">Name</label>
+                    <input type="text" class="validate[required]" name="name" id="input-place-name" value=""/>
+
+                </li>
+            </ul>
+            <input type="hidden" name="longitude" id="input-place-longitude"/>
+            <input type="hidden" name="latitude" id="input-place-latitude"/>
+            <input type="hidden" name="id" id="input-place-id"/>
+            <input type="hidden" name="version" id="input-place-version"/>
+            <input type="hidden" name="class" id="input-place-class"/>
+        </form>
+        <div id="map-canvas-form-place" style="height: 70%;width: 100%;position: absolute;"></div>
+    </div>
+    <div data-theme="a" data-role="footer" data-position="fixed">
         <div data-role="navbar">
             <ul>
                 <li>
-                    <a data-transition="slide" data-role="button" data-icon="delete" id="delete-place">Delete</a>
+                    <a  data-theme="b" data-transition="slide" data-role="button" data-icon="delete" id="delete-place">Delete</a>
                 </li>
                 <li>
-                    <a data-transition="slide" data-role="button" data-icon="save" id="submit-place">Save</a>
+                    <a data-theme="b" data-transition="slide" data-role="button" data-icon="save" id="submit-place">Save</a>
                 </li>
             </ul>
         </div>
