@@ -36,15 +36,34 @@
     <script src="js/threecirclesconfess/manager-bootstrap.js"></script>
     <script src="js/jquery/jquery.mobile-1.3.0.min.js"></script>
     <script src="js/jquery/mobiscroll.custom-2.4.4.min.js"></script>
+
+    <link rel="stylesheet" href="css/my.css"/>
+
 </head>
 <body>
-<section data-role="page" id="section-list-place">
-    <div data-role="header" data-position="fixed">
-        <a href="index.html" data-transition="slide" data-icon="arrow-l">Back</a>
-        <h1>Place</h1>
-        <div class="ui-btn-right" data-role="controlgroup" data-type="horizontal">
-            <a data-transition="none" data-role="button" data-icon="grid" id="list-all-place">List</a>
-            <a data-transition="none" data-role="button" data-icon="star" id="map-all-place">Map</a>
+
+
+<!-- Home -->
+<div data-role="page" id="section-list-place"class="flow">
+    <div data-role="panel" data-theme="a" id="mypanel">
+        <a href="index.html" rel="external" data-role="button"  data-icon="home">Timeline</a>
+        <a href="#mypanel" data-role="button" data-icon="star">Places</a>
+        <a href="user-index.html"  rel="external" data-role="button" data-icon="alert">Friends</a>
+        <a href="#mypanel" data-role="button" data-icon="grid">Settings</a>
+    </div>
+    <div data-role="header" data-position="fixed" data-theme="b">
+        <div id="navbar" data-role="navbar" data-iconpos="top">
+            <ul>
+                <li class="list-icon">
+                    <a href="#mypanel" data-transition="fade" data-role="button" data-icon="bars" class="big">&nbsp;</a>
+                </li>
+                <li class="list-search">
+                    <input data-theme="c" class="search-header" placeholder="Find a place to go"/>
+                </li>
+                <li class="list-icon">
+                    <a href="#page1" data-transition="fade" data-role="button" data-icon="bars">&nbsp;</a>
+                </li>
+            </ul>
         </div>
     </div>
     <div data-role="content" style="display: none;" id="list-place-parent">
@@ -53,16 +72,48 @@
     <div data-role="content" id="map-place-parent">
         <div style="height: 70%;width: 91%;position: absolute;" id="map-canvas-list-place"></div>
     </div>
-    <div data-role="footer" data-position="fixed">
-        <div data-role="navbar">
+    <div id="Footer" data-theme="a" data-role="footer" data-position="fixed">
+        <div id="navbar-footer" data-role="navbar" data-iconpos="top">
             <ul>
-                <li>
-                    <a data-transition="slide" data-role="button" data-icon="plus" id="add-place">Add</a>
+                <li style="width: 20%;">
+                    <a id="add-place" href="#section-show-checkin" data-transition="fade" data-theme="b" data-icon="edit" data-role="button" data-iconpos="top">
+                        Add</br>
+                    </a>
+                </li>
+                <li style="width: 80%;"><a href="http://3musket33rs.github.com">Cool Web Mobile with 3musket33rs</a>
                 </li>
             </ul>
         </div>
     </div>
-</section>
+
+</div>
+
+<!--<section data-role="page" id="section-list-place">-->
+    <!--<div data-role="header" data-position="fixed">-->
+        <!--<a href="index.html" data-transition="slide" data-icon="arrow-l">Back</a>-->
+        <!--<h1>Place</h1>-->
+        <!--<div class="ui-btn-right" data-role="controlgroup" data-type="horizontal">-->
+            <!--<a data-transition="none" data-role="button" data-icon="grid" id="list-all-place">List</a>-->
+            <!--<a data-transition="none" data-role="button" data-icon="star" id="map-all-place">Map</a>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<div data-role="content" style="display: none;" id="list-place-parent">-->
+        <!--<ul data-role="listview" data-inset="true" data-filter="true" id="list-place"/>-->
+    <!--</div>-->
+    <!--<div data-role="content" id="map-place-parent">-->
+        <!--<div style="height: 70%;width: 91%;position: absolute;" id="map-canvas-list-place"></div>-->
+    <!--</div>-->
+    <!--<div data-role="footer" data-position="fixed">-->
+        <!--<div data-role="navbar">-->
+            <!--<ul>-->
+                <!--<li>-->
+                    <!--<a data-transition="slide" data-role="button" data-icon="plus" id="add-place">Add</a>-->
+                <!--</li>-->
+            <!--</ul>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</section>-->
+
 <section data-role="page" id="section-show-place">
     <div data-role="header" id="show-place" data-position="fixed">
         <a href="#section-list-place" data-transition="slide" data-icon="arrow-l">Cancel</a>
