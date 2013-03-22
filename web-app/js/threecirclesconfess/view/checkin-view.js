@@ -143,8 +143,6 @@ threecirclesconfess.view.checkinview = function (model, elements) {
 
     that.elements.add.live('click tap', function (event) {
         event.stopPropagation();
-        //$('#form-update-checkin').validationEngine('hide');
-        //$('#form-update-checkin').validationEngine({promptPosition: 'bottomLeft'});
         that.editButtonClicked.notify();
         createElement();
     });
@@ -155,15 +153,14 @@ threecirclesconfess.view.checkinview = function (model, elements) {
         $('#form-update-checkin').validationEngine({promptPosition: 'bottomLeft'});
         that.editButtonClicked.notify();
         showElement($(event.currentTarget).attr("data-id"));
-});
+    });
 
     var createElement = function () {
         $.mobile.changePage($('#section-show-checkin'));
     };
 
-    var storeLatLng = function(lat, lng) {
-        that.latitude = lat;
-        that.longitude = lng;
+    var storeLatLng = function(place) {
+        that.selectedPlace = place;
     };
 
     $("#section-show-checkin").live( "pageshow", function (event) {
@@ -171,8 +168,36 @@ threecirclesconfess.view.checkinview = function (model, elements) {
     });
 
     $("#checkin").live( "pageshow", function (event) {
-        geolocationCheckin.showMap('map_canvas3', that.latitude, that.longitude);
+        geolocationCheckin.showMap('map_canvas3', that.selectedPlace);
     });
+
+    $("#place-submit").live( "click tap", function (event) {
+        event.stopPropagation();
+        var obj = {name: that.selectedPlace.name, address: that.selectedPlace.address, latitude: that.selectedPlace.lat, longitude: that.selectedPlace.lng};
+        var newElement = {
+             place: JSON.stringify(obj)
+        };
+        that.createButtonClicked.notify(newElement, event);
+    });
+
+    $("#checkin-submit").live( "click tap", function (event) {
+            event.stopPropagation();
+            $('#form-update-checkin').validationEngine('hide');
+            if($('#form-update-checkin').validationEngine('validate')) {
+                var placeObj = {name: that.selectedPlace.name, address: that.selectedPlace.address, latitude: that.selectedPlace.lat, longitude: that.selectedPlace.lng};
+                var description = $('#textarea-1').val();
+                $('#textarea-1').val('');
+
+                var obj = {description: description, 'owner.id': "1", 'place': placeObj};
+                //grails.mobile.helper.toObject($('#form-update-checkin').find('input, select'));
+                obj.when = new Date();
+                var newElement = {
+                    checkin: JSON.stringify(obj)
+                };
+                that.createButtonClicked.notify(newElement, event);
+            }
+        });
+
 
     var showElement = function (id) {
         resetForm('form-update-checkin');

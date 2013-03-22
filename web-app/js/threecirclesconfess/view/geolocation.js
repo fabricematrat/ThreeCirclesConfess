@@ -23,12 +23,12 @@ threecirclesconfess.view.geolocation = function () {
 
     var removeMarkers = function () {
         $.each(markers, function (key, marker) {
-            marker.setMap(null);
+            if(marker) {
+                marker.setMap(null);
+            }
             delete markers[key];
         });
     };
-
-    //var onSuccess =  ;
 
     var onError = function() {
         handleNoGeolocation(true);
@@ -48,18 +48,28 @@ threecirclesconfess.view.geolocation = function () {
         that.map.setCenter(options.position);
     }
 
-    that.showMap = function(canvas, latitude, longitude) {
-        var pos = new google.maps.LatLng(latitude, longitude);
+    that.showMap = function(canvas, place) {
+        var pos = new google.maps.LatLng(place.lat, place.lng);
         if (!that.map) {
             that.map = new google.maps.Map(document.getElementById(canvas), mapOptions);
         }
 
-        that.map.setCenter(new google.maps.LatLng(latitude, longitude));
-        var html = '<div style="width:500px%; display:inline;"><span><textarea name="textarea-1" id="textarea-1" placeholder="What are you up to?"></textarea></span><div><img src="http://placehold.it/100x50/8e8"/><img src="http://placehold.it/100x50/8e8"/></div></div>'
-        var infowindow = new google.maps.InfoWindow({
+        that.map.setCenter(new google.maps.LatLng(place.lat, place.lng));
+        var html = null;
+        if($('#textarea-1').size() == 0) {
+            html = $('<div id="div-bubble" style="width:500px%; display:inline;">');
+            var span = $('<span>');
+            var textarea = $('<textarea name="textarea-1" id="textarea-1" placeholder="What are you up to?">');
+            span.append(textarea);
+            html.append(span);
+            html.append('<div><img src="http://placehold.it/100x50/8e8"/><img src="http://placehold.it/100x50/8e8"/></div>');
+        } else {
+            html = $('#div-bubble');
+        }
+        that.infowindow = new google.maps.InfoWindow({
             map: that.map,
             position: pos,
-            content: html
+            content: html.html()
         });
     };
 
@@ -95,10 +105,12 @@ threecirclesconfess.view.geolocation = function () {
                         var distance = google.maps.geometry.spherical.computeDistanceBetween(pos, result.geometry.location);
                         var lat = result.geometry.location.lat();
                         var lng = result.geometry.location.lng();
+                        var name = result.name;
+                        var address = result.vicinity;
                         var li = $('<li>');
                         var a = $('<a>')
                         a.on('click tap', function(event) {
-                           myFunction(lat, lng);
+                           myFunction({lat: lat, lng: lng, name: name, address: address});
                         });
 
                         a.attr({

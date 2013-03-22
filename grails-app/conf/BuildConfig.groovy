@@ -53,5 +53,11 @@ grails.project.dependency.resolution = {
         runtime ":database-migration:1.1"
 
         compile ':cache:1.0.0'
+
+        // http://support.cloudfoundry.com/entries/21014643-Grails-Spring-Security-deployment-problem
+        // to fix cf/springsecurity issue
+        compile ":webxml:1.4.1"
+
+        //compile ':cloud-foundry:1.2.3'
     }
 }
