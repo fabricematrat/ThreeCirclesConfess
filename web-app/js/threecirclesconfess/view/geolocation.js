@@ -48,6 +48,20 @@ threecirclesconfess.view.geolocation = function () {
         that.map.setCenter(options.position);
     }
 
+    that.showMapBackground = function(canvas, place) {
+        var pos = new google.maps.LatLng(-43.397, 7.644);
+        if (!that.map) {
+            that.map = new google.maps.Map(document.getElementById(canvas), mapOptions);
+        }
+
+        that.map.setCenter(pos);
+
+        that.infowindow = new google.maps.InfoWindow({
+            map: that.map,
+            position: pos
+        });
+    };
+
     that.showMap = function(canvas, place) {
         var pos = new google.maps.LatLng(place.lat, place.lng);
         if (!that.map) {

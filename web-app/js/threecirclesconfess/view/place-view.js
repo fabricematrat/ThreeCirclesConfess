@@ -4,6 +4,7 @@ threecirclesconfess.view = threecirclesconfess.view || {};
 threecirclesconfess.view.placeview = function (model, elements) {
 
     var that = grails.mobile.mvc.view(model, elements);
+    var mapBackground = grails.mobile.map.googleMapService();
     var mapServiceList = grails.mobile.map.googleMapService();
     var mapServiceForm = grails.mobile.map.googleMapService();
 
@@ -100,6 +101,7 @@ threecirclesconfess.view.placeview = function (model, elements) {
     });
     that.elements.list.live('pageinit', function (e) {
         that.listButtonClicked.notify();
+        mapBackground.showMapBackground('');
     });
 
     that.elements.save.live('click tap', function (event) {

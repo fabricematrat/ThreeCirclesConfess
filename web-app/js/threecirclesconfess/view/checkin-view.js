@@ -7,6 +7,7 @@ threecirclesconfess.view.checkinview = function (model, elements) {
     var timeline = threecirclesconfess.view.timeline();
     var geolocationSearch = threecirclesconfess.view.geolocation();
     var geolocationCheckin = threecirclesconfess.view.geolocation();
+    var geolocationBackground = threecirclesconfess.view.geolocation()
 
     that.model.logged.attach(function (data, event) {
         if (data.item.errors) {
@@ -117,6 +118,7 @@ threecirclesconfess.view.checkinview = function (model, elements) {
     // user interface actions
     that.elements.list.live('pageinit', function (e) {
         that.listButtonClicked.notify();
+        geolocationBackground.showMapBackground('map_canvas', {}) ;
     });
 
     that.elements.save.live('click tap', function (event) {
@@ -170,6 +172,7 @@ threecirclesconfess.view.checkinview = function (model, elements) {
     $("#checkin").live( "pageshow", function (event) {
         geolocationCheckin.showMap('map_canvas3', that.selectedPlace);
     });
+
 
     $("#checkin-submit").live( "click tap", function (event) {
             event.stopPropagation();
