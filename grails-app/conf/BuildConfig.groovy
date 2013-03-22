@@ -6,6 +6,7 @@ grails.project.target.level = 1.6
 grails.project.source.level = 1.6
 //grails.project.war.file = "target/${appName}-${appVersion}.war"
 grails.plugin.location."html5-mobile-scaffolding" = "../html5-mobile-scaffolding"
+grails.plugin.location."phonegapbuild" = "../phonegapbuild"
 
 grails.project.dependency.resolution = {
     // inherit Grails' default dependencies
@@ -59,5 +60,8 @@ grails.project.dependency.resolution = {
         compile ":webxml:1.4.1"
 
         //compile ':cloud-foundry:1.2.3'
+
+
+
     }
 }

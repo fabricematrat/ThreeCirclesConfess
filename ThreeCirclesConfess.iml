@@ -68,6 +68,7 @@
     </orderEntry>
     <orderEntry type="module" module-name="ThreeCirclesConfess-grailsPlugins" />
     <orderEntry type="module" module-name="html5MobileScaffolding-inplacePlugin" exported="" />
+    <orderEntry type="module" module-name="phonegapbuild-inplacePlugin" exported="" />
   </component>
 </module>
 

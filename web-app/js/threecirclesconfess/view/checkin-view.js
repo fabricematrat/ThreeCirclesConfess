@@ -171,15 +171,6 @@ threecirclesconfess.view.checkinview = function (model, elements) {
         geolocationCheckin.showMap('map_canvas3', that.selectedPlace);
     });
 
-    $("#place-submit").live( "click tap", function (event) {
-        event.stopPropagation();
-        var obj = {name: that.selectedPlace.name, address: that.selectedPlace.address, latitude: that.selectedPlace.lat, longitude: that.selectedPlace.lng};
-        var newElement = {
-             place: JSON.stringify(obj)
-        };
-        that.createButtonClicked.notify(newElement, event);
-    });
-
     $("#checkin-submit").live( "click tap", function (event) {
             event.stopPropagation();
             $('#form-update-checkin').validationEngine('hide');
