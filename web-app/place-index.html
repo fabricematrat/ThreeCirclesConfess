@@ -58,10 +58,12 @@
                     <a href="#mypanel" data-transition="fade" data-role="button" data-icon="bars" class="big">&nbsp;</a>
                 </li>
                 <li class="list-search">
-                    <input data-theme="c" class="search-header" placeholder="Find a place to go"/>
+                    <!--<input data-theme="c" class="search-header" placeholder="Find a place to go"/>-->
                 </li>
-                <li class="list-icon">
-                    <a href="#page1" data-transition="fade" data-role="button" data-icon="bars">&nbsp;</a>
+
+                <li data-role="controlgroup" data-type="horizontal" data-mini="true" class="list-icon">
+                    <a data-transition="none" data-role="button"  data-inline="true" data-icon="grid" id="list-all-place">List&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                    <a data-transition="none" data-role="button" data-icon="star" data-iconpos="notext" id="map-all-place">Map&nbsp;&nbsp;&nbsp;</a>
                 </li>
             </ul>
         </div>
@@ -87,32 +89,6 @@
     </div>
 
 </div>
-
-<!--<section data-role="page" id="section-list-place">-->
-    <!--<div data-role="header" data-position="fixed">-->
-        <!--<a href="index.html" data-transition="slide" data-icon="arrow-l">Back</a>-->
-        <!--<h1>Place</h1>-->
-        <!--<div class="ui-btn-right" data-role="controlgroup" data-type="horizontal">-->
-            <!--<a data-transition="none" data-role="button" data-icon="grid" id="list-all-place">List</a>-->
-            <!--<a data-transition="none" data-role="button" data-icon="star" id="map-all-place">Map</a>-->
-        <!--</div>-->
-    <!--</div>-->
-    <!--<div data-role="content" style="display: none;" id="list-place-parent">-->
-        <!--<ul data-role="listview" data-inset="true" data-filter="true" id="list-place"/>-->
-    <!--</div>-->
-    <!--<div data-role="content" id="map-place-parent">-->
-        <!--<div style="height: 70%;width: 91%;position: absolute;" id="map-canvas-list-place"></div>-->
-    <!--</div>-->
-    <!--<div data-role="footer" data-position="fixed">-->
-        <!--<div data-role="navbar">-->
-            <!--<ul>-->
-                <!--<li>-->
-                    <!--<a data-transition="slide" data-role="button" data-icon="plus" id="add-place">Add</a>-->
-                <!--</li>-->
-            <!--</ul>-->
-        <!--</div>-->
-    <!--</div>-->
-<!--</section>-->
 
 <section data-role="page" id="section-show-place">
     <div data-role="header" id="show-place" data-position="fixed">
