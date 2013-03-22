@@ -12,44 +12,6 @@
     <link rel="stylesheet" href="css/jquery/mobiscroll.custom-2.4.4.min.css" type="text/css"/>
     <script src="js/jquery/jquery-1.8.3.min.js"></script>
     <script src="js/grails/energize.js"></script>
-    <script src="js/jquery/jquery.validationEngine.js"></script>
-    <script src="js/jquery/jquery.validationEngine-en.js"></script>
-
-    <!--<script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>-->
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places,geometry"></script>
-
-    <script src="js/grails/grailsEvents.js"></script>
-    <script src="js/jquery/jquery.atmosphere.js" type="text/javascript" ></script>
-    <script src="js/grails/mobile/map/googleMapService.js"></script>
-    <script src="js/grails/mobile/event.js"></script>
-    <script src="js/grails/mobile/mvc/model.js"></script>
-    <script src="js/grails/mobile/mvc/controller.js"></script>
-    <script src="js/grails/mobile/mvc/view.js"></script>
-    <script src="js/grails/mobile/storage/store.js"></script>
-    <script src="js/grails/mobile/feed/online.js"></script>
-    <script src="js/grails/mobile/feed/offline.js"></script>
-    <script src="js/grails/mobile/feed/feed.js"></script>
-    <script src="js/grails/mobile/helper/toObject.js"></script>
-    <script src="js/grails/mobile/sync/syncmanager.js"></script>
-    <script src="js/grails/mobile/push/pushmanager.js"></script>
-    <script src="js/grails/mobile/mvc/manager.js"></script>
-
-
-    <script src="js/threecirclesconfess/view/timeline.js"></script>
-    <script src="js/threecirclesconfess/view/geolocation.js"></script>
-
-    <script src="js/threecirclesconfess/view/user-view.js"></script>
-    <script src="js/threecirclesconfess/view/place-view.js"></script>
-    <script src="js/threecirclesconfess/view/comment-view.js"></script>
-    <script src="js/threecirclesconfess/view/user-view.js"></script>
-    <script src="js/threecirclesconfess/view/checkin-view.js"></script>
-    <script src="js/threecirclesconfess/configuration-bootstrap.js"></script>
-    <script src="js/threecirclesconfess/bootstrap/checkin-bootstrap.js"></script>
-    <script src="js/threecirclesconfess/bootstrap/user-bootstrap.js"></script>
-    <script src="js/threecirclesconfess/bootstrap/place-bootstrap.js"></script>
-    <script src="js/threecirclesconfess/bootstrap/comment-bootstrap.js"></script>
-    <script src="js/threecirclesconfess/bootstrap/user-bootstrap.js"></script>
-    <script src="js/threecirclesconfess/manager-bootstrap.js"></script>
     <script src="js/jquery/jquery.mobile-1.3.0.min.js"></script>
     <script src="js/jquery/mobiscroll.custom-2.4.4.min.js"></script>
 
@@ -83,7 +45,7 @@
             </ul>
         </div>
     </div>
-    <div data-role="content" class="flow">
+    <div id="myContent"  data-role="content" class="flow">
         <div id="map_canvas" class="map"></div>
         <div id="list-checkin-parent">
         </div>
@@ -103,32 +65,17 @@
     </div>
 </div>
 
-
-<!--<section data-role="page" id="section-list-checkin">-->
-    <!--<div data-role="header" data-position="fixed">-->
-        <!--<a href="index.html" data-transition="slide" data-icon="arrow-l">Back</a>-->
-        <!--<h1>Checkin</h1>-->
-        <!--<a id="login" class="ui-btn-right" href="#section-show-user">Loginme</a>-->
-    <!--</div>-->
-    <!--<div data-role="content" id="list-checkin-parent">-->
-        <!--<ul data-role="listview" data-inset="true" data-filter="true" id="list-checkin"/>-->
-    <!--</div>-->
-    <!--<div data-role="footer" data-position="fixed">-->
-        <!--<div data-role="navbar">-->
-            <!--<ul>-->
-                <!--<li>-->
-                    <!--<a data-transition="slide" data-role="button" data-icon="plus" id="add-checkin">Add</a>-->
-                <!--</li>-->
-            <!--</ul>-->
-        <!--</div>-->
-    <!--</div>-->
-<!--</section>-->
-
-
 <div data-role="page" id="section-show-checkin" data-theme="c">
     <div data-role="header" data-position="fixed" data-theme="a">
-        <a href="#section-list-checkin" data-transition="slide" data-role="button" data-icon="arrow-l" data-iconpos="notext"></a>
-        <h1>Check In</h1>
+        <div data-role="navbar" data-iconpos="top">
+            <ul>
+                <li class="list-icon"><a href="#section-list-checkin" data-icon="arrow-l"></a></li>
+                <!--<li style="width:90%">Check In</li>-->
+            </ul>
+        </div>
+
+        <!--<a href="#section-list-checkin" data-transition="slide" data-role="button" data-icon="arrow-l" data-iconpos="notext"></a>-->
+
     </div>
     <div data-role="content">
         <div id="map_canvas2" class="map"></div>
@@ -144,92 +91,11 @@
         <h1>Check In</h1>
     </div>
     <div data-role="content">
-        <div id="map_canvas3" class="big-map"></div>
-        <div style="display: table;padding:2em;">
-                    <span style="display: table-cell;">
-                        <label for="flip-1">Private</label>
-                        <select name="flip-1" id="flip-1" data-role="slider">
-                            <option value="off">Off</option>
-                            <option value="on">On</option>
-                        </select>
-                    </span>
-                    <span style="display: table-cell;padding-left: 15em;">
-                        <label for="flip-2">Twitter</label>
-                        <select name="flip-2" id="flip-2" data-role="slider">
-                            <option value="off">Off</option>
-                            <option value="on">On</option>
-                        </select>
-                    </span>
-                    <span style="display: table-cell;padding-left:1em">
-                        <label for="flip-3">Facebook</label>
-                        <select name="flip-3" id="flip-3" data-role="slider">
-                            <option value="off">Off</option>
-                            <option value="on">On</option>
-                        </select>
-                    </span>
-        </div>
+        <div id="map_canvas3" class="map"></div>
         <button id="checkin-submit" data-theme="e">Check in Here</button>
     </div>
 </div>
 
-<!--
-<section data-role="page" id="section-show-checkin">
-    <div data-role="header" id="show-checkin" data-position="fixed">
-        <a href="#section-list-checkin" data-transition="slide" data-icon="arrow-l">Cancel</a>
-        <h1>Checkin</h1>
-    </div>
-    <form id="form-update-checkin" name="form-update-checkin">
-        <ul data-role="listview" data-inset="true">
-            <li data-role="fieldcontain">
-                <label for="input-checkin-description">Description</label>
-                <input type="text" class="validate[required]" name="description" id="input-checkin-description" value=""/>
-
-            </li>
-            <li data-role="fieldcontain">
-                <div data-role="fieldcontain">
-                    <label for="select-checkin-owner" class="select">Choose a User</label>
-                    <select name="owner" data-gorm-relation="many-to-one" id="select-checkin-owner" data-native-menu="false">
-                        <option value="0"></option>
-                    </select>
-                </div>
-            </li>
-            <li data-role="fieldcontain">
-                <div data-role="fieldcontain">
-                    <label for="select-checkin-place" class="select">Choose a Place</label>
-                    <select name="place" data-gorm-relation="many-to-one" id="select-checkin-place" data-native-menu="false">
-                        <option value="0"></option>
-                    </select>
-                </div>
-            </li>
-            <li>
-                <label for="multichoice-comments" class="select">Choose some comments</label>
-                <fieldset id="multichoice-comments" data-gorm-relation="one-to-many" data-role="controlgroup">
-                </fieldset>
-            </li>
-            <li>
-                <label for="multichoice-friends" class="select">Choose some friends</label>
-                <fieldset id="multichoice-friends" data-gorm-relation="one-to-many" data-role="controlgroup">
-                </fieldset>
-            </li>
-        </ul>
-        <input type="hidden" name="id" id="input-checkin-id"/>
-        <input type="hidden" name="version" id="input-checkin-version"/>
-        <input type="hidden" name="class" id="input-checkin-class"/>
-    </form>
-    <div data-role="footer" data-position="fixed">
-        <div data-role="navbar">
-            <ul>
-                <li>
-                    <a data-transition="slide" data-role="button" data-icon="delete" id="delete-checkin">Delete</a>
-                </li>
-                <li>
-                    <a data-transition="slide" data-role="button" data-icon="save" id="submit-checkin">Save</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</section>
-  -->
 <section data-role="page" id="section-show-user">
     <div data-role="header" id="show-user" data-position="fixed">
         <a href="#section-list-checkin" data-transition="slide" data-icon="arrow-l">Cancel</a>
@@ -269,6 +135,44 @@
         </div>
     </div>
 </section>
+<script src="js/jquery/jquery.validationEngine.js"></script>
+<script src="js/jquery/jquery.validationEngine-en.js"></script>
+
+<!--<script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>-->
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places,geometry"></script>
+
+<script src="js/grails/grailsEvents.js"></script>
+<script src="js/jquery/jquery.atmosphere.js" type="text/javascript" ></script>
+<script src="js/grails/mobile/map/googleMapService.js"></script>
+<script src="js/grails/mobile/event.js"></script>
+<script src="js/grails/mobile/mvc/model.js"></script>
+<script src="js/grails/mobile/mvc/controller.js"></script>
+<script src="js/grails/mobile/mvc/view.js"></script>
+<script src="js/grails/mobile/storage/store.js"></script>
+<script src="js/grails/mobile/feed/online.js"></script>
+<script src="js/grails/mobile/feed/offline.js"></script>
+<script src="js/grails/mobile/feed/feed.js"></script>
+<script src="js/grails/mobile/helper/toObject.js"></script>
+<script src="js/grails/mobile/sync/syncmanager.js"></script>
+<script src="js/grails/mobile/push/pushmanager.js"></script>
+<script src="js/grails/mobile/mvc/manager.js"></script>
+
+
+<script src="js/threecirclesconfess/view/timeline.js"></script>
+<script src="js/threecirclesconfess/view/geolocation.js"></script>
+
+<script src="js/threecirclesconfess/view/user-view.js"></script>
+<script src="js/threecirclesconfess/view/place-view.js"></script>
+<script src="js/threecirclesconfess/view/comment-view.js"></script>
+<script src="js/threecirclesconfess/view/user-view.js"></script>
+<script src="js/threecirclesconfess/view/checkin-view.js"></script>
+<script src="js/threecirclesconfess/configuration-bootstrap.js"></script>
+<script src="js/threecirclesconfess/bootstrap/checkin-bootstrap.js"></script>
+<script src="js/threecirclesconfess/bootstrap/user-bootstrap.js"></script>
+<script src="js/threecirclesconfess/bootstrap/place-bootstrap.js"></script>
+<script src="js/threecirclesconfess/bootstrap/comment-bootstrap.js"></script>
+<script src="js/threecirclesconfess/bootstrap/user-bootstrap.js"></script>
+<script src="js/threecirclesconfess/manager-bootstrap.js"></script>
 
 </body>
 </html>

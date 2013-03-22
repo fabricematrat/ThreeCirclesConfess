@@ -9,6 +9,15 @@ threecirclesconfess.view.checkinview = function (model, elements) {
     var geolocationCheckin = threecirclesconfess.view.geolocation();
     var geolocationBackground = threecirclesconfess.view.geolocation()
 
+
+    $("#myContent").on("swiperight",function(){
+        $("#mypanel").panel( "open");
+    });
+
+    $("#myContent").on("swipeleft",function(){
+        $("#mypanel").panel( "close");
+    });
+
     that.model.logged.attach(function (data, event) {
         if (data.item.errors) {
             $.each(data.item.errors, function(index, error) {

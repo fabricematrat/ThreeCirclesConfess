@@ -49,7 +49,7 @@ threecirclesconfess.view.geolocation = function () {
     }
 
     that.showMapBackground = function(canvas, place) {
-        var pos = new google.maps.LatLng(-43.397, 7.644);
+        var pos = new google.maps.LatLng(43.7, 7.2);
         if (!that.map) {
             that.map = new google.maps.Map(document.getElementById(canvas), mapOptions);
         }

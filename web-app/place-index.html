@@ -57,14 +57,11 @@
                 <li class="list-icon">
                     <a href="#mypanel" data-transition="fade" data-role="button" data-icon="bars" class="big">&nbsp;</a>
                 </li>
-                <li > &nbsp;
-                </li>
-                <li > &nbsp;
-                </li>
-                <li   class="list-icon">
+                <li style="width: 70%">&nbsp;</li>
+                <li class="list-icon">
                     <a data-transition="none" data-role="button"  data-icon="grid" id="list-all-place">List&nbsp;</a>
                 </li>
-                <li  class="list-icon">
+                <li class="list-icon">
                     <a data-transition="none" data-role="button" data-icon="star" id="map-all-place">Map&nbsp;</a>
                 </li>
             </ul>
@@ -92,8 +89,8 @@
 
 </div>
 
-<section data-role="page" id="section-show-place">
-    <div data-role="header" id="show-place" data-position="fixed">
+<section data-role="page" id="section-show-place" data-theme="a" data-content-theme="a">
+    <div data-role="header" id="show-place" data-position="fixed"  data-theme="b">
         <a href="#section-list-place" data-transition="slide" data-icon="arrow-l">Cancel</a>
         <h1>Place</h1>
     </div>
@@ -108,27 +105,22 @@
     <div data-role="header" data-position="fixed" data-theme="b">
         <div id="navbar2" data-role="navbar" data-iconpos="top">
             <ul>
-                <li class="list-icon">
-                    <a href="#mypanel2" data-transition="fade" data-role="button" data-icon="bars" class="big">&nbsp;</a>
-                </li>
-                <li>&nbsp;</li>
-                <li><br/>Updating...</li>
-                <li><a href="#section-list-place" data-icon="arrow-l">Cancel</a></li>
+                <li class="list-icon"><a href="#section-list-place" data-icon="arrow-l"></a></li>
             </ul>
         </div>
     </div>
 
-    <div data-role="content" >
+    <div data-role="content" data-theme="a">
+        <div id="map-canvas-form-place" class="map"></div>
         <form id="form-update-place" name="form-update-place">
             <ul data-role="listview" data-inset="true">
                 <li data-role="fieldcontain">
-                    <label for="input-place-address">Address</label>
-                    <input type="text" class="validate[required]" name="address" id="input-place-address" value=""/>
-
-                </li>
-                <li data-role="fieldcontain">
                     <label for="input-place-name">Name</label>
                     <input type="text" class="validate[required]" name="name" id="input-place-name" value=""/>
+                </li>
+                <li data-role="fieldcontain">
+                    <label for="input-place-address">Address</label>
+                    <input type="text" class="validate[required]" name="address" id="input-place-address" value=""/>
 
                 </li>
             </ul>
@@ -137,21 +129,22 @@
             <input type="hidden" name="id" id="input-place-id"/>
             <input type="hidden" name="version" id="input-place-version"/>
             <input type="hidden" name="class" id="input-place-class"/>
+
+            <button id="submit-place" data-theme="e">Save it!</button>
         </form>
-        <div id="map-canvas-form-place" style="height: 70%;width: 100%;position: absolute;"></div>
     </div>
-    <div data-theme="a" data-role="footer" data-position="fixed">
-        <div data-role="navbar">
-            <ul>
-                <li>
-                    <a  data-theme="b" data-transition="slide" data-role="button" data-icon="delete" id="delete-place">Delete</a>
-                </li>
-                <li>
-                    <a data-theme="b" data-transition="slide" data-role="button" data-icon="save" id="submit-place">Save</a>
-                </li>
-            </ul>
-        </div>
-    </div>
+    <!--<div data-theme="a" data-role="footer" data-position="fixed">-->
+        <!--<div data-role="navbar">-->
+            <!--<ul>-->
+                <!--<li>-->
+                    <!--<a  data-theme="b" data-transition="slide" data-role="button" data-icon="delete" id="delete-place">Delete</a>-->
+                <!--</li>-->
+                <!--<li>-->
+                    <!--<a data-theme="b" data-transition="slide" data-role="button" data-icon="save" id="submit-place">Save</a>-->
+                <!--</li>-->
+            <!--</ul>-->
+        <!--</div>-->
+    <!--</div>-->
 </section>
 </body>
 </html>
