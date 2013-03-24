@@ -52,13 +52,13 @@ class BootStrap {
             Cool to meet female speaker""", user: testUser)
         comment2.save()
 
-        Checkin confess = new Checkin(description: "confess", when: new Date(), place: wien, owner: testUser)
+        Checkin confess = new Checkin(description: "confess", when: new Date().time, place: wien, owner: testUser)
         confess.save()
         confess.addToFriends(fabrice)
         confess.save()
 
 
-        Checkin devfestw = new Checkin(description: "devfestw", when: new Date() - 25, place: paris, owner: testUser)
+        Checkin devfestw = new Checkin(description: "devfestw", when: (new Date() - 25).time, place: paris, owner: testUser)
         devfestw.save()
         devfestw.addToFriends(fabrice)
         devfestw.addToComments(comment)
@@ -66,7 +66,7 @@ class BootStrap {
 
         devfestw.save()
 
-        Checkin greach = new Checkin(description: "greach", when: new Date() - 69, place: madrid, owner: testUser)
+        Checkin greach = new Checkin(description: "greach", when: (new Date() - 69).time, place: madrid, owner: testUser)
         greach.save()
         greach.addToFriends(fabrice)
         greach.addToComments(comment)

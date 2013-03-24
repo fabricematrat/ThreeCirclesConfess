@@ -4,65 +4,15 @@ threecirclesconfess.view = threecirclesconfess.view || {};
 threecirclesconfess.view.checkinview = function (model, elements) {
 
     var that = grails.mobile.mvc.view(model, elements);
-    var timeline = threecirclesconfess.view.timeline();
-    var geolocationSearch = threecirclesconfess.view.geolocation();
-    var geolocationCheckin = threecirclesconfess.view.geolocation();
-    var geolocationBackground = threecirclesconfess.view.geolocation()
-
-
-    $("#myContent").on("swiperight",function(){
-        $("#mypanel").panel( "open");
-    });
-
-    $("#myContent").on("swipeleft",function(){
-        $("#mypanel").panel( "close");
-    });
-
-    that.model.logged.attach(function (data, event) {
-        if (data.item.errors) {
-            $.each(data.item.errors, function(index, error) {
-                $('#input-user-' + error.field).validationEngine('showPrompt',error.message, 'fail');
-            });
-            event.stopPropagation();
-        } else if (data.item.message) {
-            showGeneralMessage(data, event);
-        } else {
-            if (grails.mobile.helper.getCookie("grails_remember_me")) {//)$.cookie('grails_remember_me')) {
-                $('#login').replaceWith('<a id="login" class="ui-btn-right" href="#section-show-user">Logout</a>');
-            } else {
-                $('#login').replaceWith('<a id="login" class="ui-btn-right" href="#section-show-user">Login</a>');
-            }
-            $('#login').button();
-            if (!data.item.NOTIFIED) {
-                $.mobile.changePage($('#section-list-checkin'));
-            }
-        }
-    });
-
-    $('#submit-user').live('click tap', function (event) {
-        event.stopPropagation();
-        $('#form-update-user').validationEngine('hide');
-        if($('#form-update-user').validationEngine('validate')) {
-            var obj = grails.mobile.helper.toObject($('#form-update-user').find('input, select'));
-            var newElement = obj;
-            that.loginButtonClicked.notify(newElement, event);
-
-        }
-    });
 
     // Register events
     that.model.listedItems.attach(function (data) {
-        $('#list-checkin-parent').empty();
+        $('#list-checkin').empty();
         var key, items = model.getItems();
-        //$.each($(collection).get().reverse(), callback func() {});
-        //jQuery.fn.reverse = [].reverse;
-        //$(items).reverse().each(function (key, value) {
-        //var arr - $.makeArray(obj);
         $.each(items, function(key, value) {
-            var whenInfo = timeline.getWhenInformation(this.when)
-            renderElementCustom(this, whenInfo);
+            renderElement(value);
         });
-        $('#list-checkin-parent').trigger("create");
+        $('#list-checkin').listview('refresh');
     });
 
     that.model.createdItem.attach(function (data, event) {
@@ -74,12 +24,12 @@ threecirclesconfess.view.checkinview = function (model, elements) {
         } else if (data.item.message) {
             showGeneralMessage(data, event);
         } else {
-            renderElementCustom(data.item, "just now");
+            renderElement(data.item);
             $('#list-checkin').listview('refresh');
             if (!data.item.NOTIFIED) {
                 $.mobile.changePage($('#section-list-checkin'));
             }
-        }
+		}
     });
 
     that.model.updatedItem.attach(function (data, event) {
@@ -91,8 +41,7 @@ threecirclesconfess.view.checkinview = function (model, elements) {
         } else if (data.item.message) {
             showGeneralMessage(data, event);
         } else {
-            var whenInfo = timeline.getWhenInformation(data.item.when);
-            updateElementCustom(data.item, whenInfo);
+            updateElement(data.item);
             $('#list-checkin').listview('refresh');
             if (!data.item.NOTIFIED) {
                 $.mobile.changePage($('#section-list-checkin'));
@@ -127,7 +76,6 @@ threecirclesconfess.view.checkinview = function (model, elements) {
     // user interface actions
     that.elements.list.live('pageinit', function (e) {
         that.listButtonClicked.notify();
-        geolocationBackground.showMapBackground('map_canvas', {}) ;
     });
 
     that.elements.save.live('click tap', function (event) {
@@ -135,9 +83,6 @@ threecirclesconfess.view.checkinview = function (model, elements) {
         $('#form-update-checkin').validationEngine('hide');
         if($('#form-update-checkin').validationEngine('validate')) {
             var obj = grails.mobile.helper.toObject($('#form-update-checkin').find('input, select'));
-//            var temp = new Date();
-//            obj.when = temp.getTime();
-
             var newElement = {
                 checkin: JSON.stringify(obj)
             };
@@ -156,6 +101,8 @@ threecirclesconfess.view.checkinview = function (model, elements) {
 
     that.elements.add.live('click tap', function (event) {
         event.stopPropagation();
+        $('#form-update-checkin').validationEngine('hide');
+        $('#form-update-checkin').validationEngine({promptPosition: 'bottomLeft'});
         that.editButtonClicked.notify();
         createElement();
     });
@@ -169,40 +116,10 @@ threecirclesconfess.view.checkinview = function (model, elements) {
     });
 
     var createElement = function () {
+        resetForm('form-update-checkin');
         $.mobile.changePage($('#section-show-checkin'));
+        $('#delete-checkin').css('display', 'none');
     };
-
-    var storeLatLng = function(place) {
-        that.selectedPlace = place;
-    };
-
-    $("#section-show-checkin").live( "pageshow", function (event) {
-        geolocationSearch.showMapWithPlaces('map_canvas2', "list-place", storeLatLng);
-    });
-
-    $("#checkin").live( "pageshow", function (event) {
-        geolocationCheckin.showMap('map_canvas3', that.selectedPlace);
-    });
-
-
-    $("#checkin-submit").live( "click tap", function (event) {
-            event.stopPropagation();
-            $('#form-update-checkin').validationEngine('hide');
-            if($('#form-update-checkin').validationEngine('validate')) {
-                var placeObj = {name: that.selectedPlace.name, address: that.selectedPlace.address, latitude: that.selectedPlace.lat, longitude: that.selectedPlace.lng};
-                var description = $('#textarea-1').val();
-                $('#textarea-1').val('');
-
-                var obj = {description: description, 'owner.id': "1", 'place': placeObj};
-                //grails.mobile.helper.toObject($('#form-update-checkin').find('input, select'));
-                obj.when = new Date().getTime();
-                var newElement = {
-                    checkin: JSON.stringify(obj)
-                };
-                that.createButtonClicked.notify(newElement, event);
-            }
-        });
-
 
     var showElement = function (id) {
         resetForm('form-update-checkin');
@@ -212,26 +129,26 @@ threecirclesconfess.view.checkinview = function (model, elements) {
             value = element['owner'];
         }
         if (!value || (value === Object(value))) {
-            value = element.owner.id;
+           value = element.owner.id;
         }
         $('select[data-gorm-relation="many-to-one"][name="owner"]').val(value).trigger("change");
-
+        
         var value = element['place.id'];
         if (!value) {
             value = element['place'];
         }
         if (!value || (value === Object(value))) {
-            value = element.place.id;
+           value = element.place.id;
         }
         $('select[data-gorm-relation="many-to-one"][name="place"]').val(value).trigger("change");
-
+        
         var commentsSelected = element.comments;
         $.each(commentsSelected, function (key, value) {
             var selector;
             if (value === Object(value)) {
-                selector= '#checkbox-comments-' + value.id;
+              selector= '#checkbox-comments-' + value.id;
             } else {
-                selector= '#checkbox-comments-' + value;
+              selector= '#checkbox-comments-' + value;
             }
             $(selector).attr('checked','checked').checkboxradio('refresh');
         });
@@ -239,9 +156,9 @@ threecirclesconfess.view.checkinview = function (model, elements) {
         $.each(friendsSelected, function (key, value) {
             var selector;
             if (value === Object(value)) {
-                selector= '#checkbox-friends-' + value.id;
+              selector= '#checkbox-friends-' + value.id;
             } else {
-                selector= '#checkbox-friends-' + value;
+              selector= '#checkbox-friends-' + value;
             }
             $(selector).attr('checked','checked').checkboxradio('refresh');
         });
@@ -269,16 +186,14 @@ threecirclesconfess.view.checkinview = function (model, elements) {
             });
         });
         var div = $("#" + form);
-        if ($("#" + form)[0]) {
-            $("#" + form)[0].reset();
-        }
+        $("#" + form)[0].reset();
         $.each(div.find('input:hidden'), function(id, input) {
             if ($(input).attr('type') != 'file') {
                 $(input).val('');
             }
         });
     };
-
+    
 
     var refreshSelectDropDown = function (select, newOptions) {
         var options = null;
@@ -287,13 +202,11 @@ threecirclesconfess.view.checkinview = function (model, elements) {
         } else {
             options = select.attr('options');
         }
-        if (options) {
-            $('option', select).remove();
-            $.each(newOptions, function(val, text) {
-                options[options.length] = new Option(text, val);
-            });
-            select.val(options[0]);
-        }
+        $('option', select).remove();
+        $.each(newOptions, function(val, text) {
+            options[options.length] = new Option(text, val);
+        });
+        select.val(options[0]);
     };
 
     var renderDependentList = function (dependentName, items) {
@@ -325,7 +238,7 @@ threecirclesconfess.view.checkinview = function (model, elements) {
         });
         refreshMultiChoices(oneToMany, dependentName, options);
     };
-
+    
     var createListItem = function (element) {
         var li, a = $('<a>');
         a.attr({
@@ -343,49 +256,12 @@ threecirclesconfess.view.checkinview = function (model, elements) {
         return li;
     };
 
-    var createListItemCustom = function (element, timelineDate) {
-        var html = '<div class="fs-object"><div class="header"><span class="ownerimage" ><img src="http://placehold.it/100x150/8e8"/></span>' +
-            '<span class="placeimage" ><img src="http://placehold.it/80x150/e88"/></span>' +
-            '<span class="description">' +
-            '<span class="name">' + element.owner.firstname + ' ' + element.owner.lastname  + '</span> at <span class="place">' +
-            element.place.name + '</span>' +
-            '<span class="address">' + element.place.address + '</span>' +
-            '</span></div>';
-
-        html += '<div class="comment">' + element.description;
-
-        $.each(element.friends, function(key, value) {
-            html += '<br/>with <span class="name">' + value.firstname +
-                '</span>';
-
-        });
-        html += '</div>';
-
-        html += '<img class="mainimage" src="http://placehold.it/640x480/88e" />';
-
-        html +='<span class="date">' + timelineDate + '</span><a class="commentbutton"><img src="img/comments.png"/></a><a class="likebutton"><img src="img/like.png"/></a>' +
-        '</div>';
-
-        html += '<ul class="fs-list">' +
-                '<li><img src="img/ico-fire.png" />Back here after 5 months.</li>' +
-                '<li><img src="img/ico-fire.png" />First Bar in 2 months!</li></ul>';
-        return html;
-    };
-
-    var renderElementCustom = function (element, timelineDate) {
-        $('#list-checkin-parent').append(createListItemCustom(element, timelineDate)).trigger("create");
-    };
-
     var renderElement = function (element) {
         $('#list-checkin').append(createListItem(element));
     };
 
     var updateElement = function (element) {
         $('#checkin-list-' + element.id).parents('li').replaceWith(createListItem(element));
-    };
-
-    var updateElementCustom = function (element, timelineDate) {
-        $('#checkin-list-' + element.id).parents('li').replaceWith(createListItemCustom(element, timelineDate));
     };
 
     var getText = function (data) {

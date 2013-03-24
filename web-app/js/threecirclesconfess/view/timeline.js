@@ -10,8 +10,8 @@ threecirclesconfess.view.timeline = function () {
     var ONE_MONTH = 30 * ONE_DAY;
     var ONE_YEAR = 12 * ONE_MONTH;
 
-    that.getWhenInformation = function (dateAsString) {
-        return whenAsTimeline = that.getWhenInformationFromDate(Date.parse(dateAsString));
+    that.getWhenInformation = function (date) {
+        return whenAsTimeline = that.getWhenInformationFromDate(date);
     }
 
     that.getWhenInformationFromDate = function (date) {
