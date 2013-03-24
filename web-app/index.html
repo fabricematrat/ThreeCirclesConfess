@@ -8,17 +8,20 @@
     <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
     <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-retina.png">
     <link rel="stylesheet" href="css/jquery/jquery.mobile-1.3.0.min.css"/>
+    <link rel="stylesheet" href="css/my.css"/>
     <link rel="stylesheet" href="css/jquery/validationEngine.jquery.css" type="text/css"/>
     <link rel="stylesheet" href="css/jquery/mobiscroll.custom-2.4.4.min.css" type="text/css"/>
     <script src="js/jquery/jquery-1.8.3.min.js"></script>
     <script src="js/grails/energize.js"></script>
+    <script >
+    $( document ).on( "mobileinit", function() {
+//        $.mobile.allowCrossDomainPages = true;
+//        $.support.cors = true;
+        $.mobile.defaultPageTransition = 'none';
+    });
+    </script>
+
     <script src="js/jquery/jquery.mobile-1.3.0.min.js"></script>
-    <script src="js/jquery/mobiscroll.custom-2.4.4.min.js"></script>
-
-    <link rel="stylesheet" href="css/my.css"/>
-
-
-
 </head>
 <body>
 
@@ -34,13 +37,13 @@
         <div id="navbar" data-role="navbar" data-iconpos="top">
             <ul>
                 <li class="list-icon">
-                    <a href="#mypanel" data-transition="fade" data-role="button" data-icon="bars" class="big">&nbsp;</a>
+                    <a href="#mypanel" data-role="button" data-icon="bars" class="big">&nbsp;</a>
                 </li>
                 <li class="list-search">
                     <input data-theme="c" class="search-header" placeholder="Find a place to go"/>
                 </li>
                 <li class="list-icon">
-                    <a href="#page1" data-transition="fade" data-role="button" data-icon="bars">&nbsp;</a>
+                    <a href="#page1" data-role="button" data-icon="bars">&nbsp;</a>
                 </li>
             </ul>
         </div>
@@ -54,7 +57,7 @@
         <div id="navbar-footer" data-role="navbar" data-iconpos="top">
             <ul>
                 <li style="width: 20%;">
-                    <a id="add-checkin" href="#section-show-checkin" data-transition="fade" data-theme="b" data-icon="edit" data-role="button" data-iconpos="top">
+                    <a id="add-checkin" href="#section-show-checkin" data-theme="b" data-icon="edit" data-role="button" data-iconpos="top">
                         Check In</br>
                     </a>
                 </li>
@@ -87,18 +90,18 @@
 
 <div data-role="page" id="checkin" data-theme="a">
     <div data-role="header" data-position="fixed" data-theme="b">
-        <a href="#section-list-checkin" data-transition="slide" data-role="button" data-icon="arrow-l" data-iconpos="notext"></a>
+        <a href="#section-list-checkin" data-role="button" data-icon="arrow-l" data-iconpos="notext"></a>
         <h1>Check In</h1>
     </div>
     <div data-role="content">
-        <div id="map_canvas3" class="map"></div>
+        <div id="map_canvas3" class="big-map"></div>
         <button id="checkin-submit" data-theme="e">Check in Here</button>
     </div>
 </div>
 
 <section data-role="page" id="section-show-user">
     <div data-role="header" id="show-user" data-position="fixed">
-        <a href="#section-list-checkin" data-transition="slide" data-icon="arrow-l">Cancel</a>
+        <a href="#section-list-checkin" data-icon="arrow-l">Cancel</a>
         <h1>User</h1>
     </div>
     <form id="form-update-user" name="form-update-user" action='j_spring_security_check' method='POST'>
@@ -129,18 +132,17 @@
         <div data-role="navbar">
             <ul>
                 <li>
-                    <a data-transition="slide" data-role="button" data-icon="save" id="submit-user">Login</a>
+                    <a data-role="button" data-icon="save" id="submit-user">Login</a>
                 </li>
             </ul>
         </div>
     </div>
 </section>
+
+<!--<script src="http://debug.phonegap.com/target/target-script-min.js#corinnekrych"></script>-->
 <script src="js/jquery/jquery.validationEngine.js"></script>
 <script src="js/jquery/jquery.validationEngine-en.js"></script>
-
-<!--<script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>-->
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places,geometry"></script>
-
 <script src="js/grails/grailsEvents.js"></script>
 <script src="js/jquery/jquery.atmosphere.js" type="text/javascript" ></script>
 <script src="js/grails/mobile/map/googleMapService.js"></script>
@@ -156,11 +158,8 @@
 <script src="js/grails/mobile/sync/syncmanager.js"></script>
 <script src="js/grails/mobile/push/pushmanager.js"></script>
 <script src="js/grails/mobile/mvc/manager.js"></script>
-
-
 <script src="js/threecirclesconfess/view/timeline.js"></script>
 <script src="js/threecirclesconfess/view/geolocation.js"></script>
-
 <script src="js/threecirclesconfess/view/user-view.js"></script>
 <script src="js/threecirclesconfess/view/place-view.js"></script>
 <script src="js/threecirclesconfess/view/comment-view.js"></script>
@@ -173,6 +172,7 @@
 <script src="js/threecirclesconfess/bootstrap/comment-bootstrap.js"></script>
 <script src="js/threecirclesconfess/bootstrap/user-bootstrap.js"></script>
 <script src="js/threecirclesconfess/manager-bootstrap.js"></script>
+<script src="js/jquery/mobiscroll.custom-2.4.4.min.js"></script>
 
 </body>
 </html>

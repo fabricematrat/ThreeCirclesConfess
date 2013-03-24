@@ -10,15 +10,6 @@ threecirclesconfess.view.timeline = function () {
     var ONE_MONTH = 30 * ONE_DAY;
     var ONE_YEAR = 12 * ONE_MONTH;
 
-    that.revisitTimeInformation = function(item) {
-        //$.each(model.getItems(), function(key, value) {
-           var date = parseDate(item.when);
-           item.whenAsTimeline = that.getWhenInformation(date);
-        return item;
-        //});
-
-    };
-
     that.getWhenInformation = function (dateAsString) {
         return whenAsTimeline = that.getWhenInformationFromDate(Date.parse(dateAsString));
     }
@@ -28,6 +19,7 @@ threecirclesconfess.view.timeline = function () {
         var earlier = date;
         var diff = now - earlier;
         if (diff < TEN_MINUTES) {    // less than 10 mins
+           console && console.log('less than 10mins');
            return "just now";
         }
         if (TEN_MINUTES <diff && diff < ONE_DAY) {  // between 10 mins to one day
@@ -53,7 +45,6 @@ threecirclesconfess.view.timeline = function () {
                 return months.quotient + " months ago";
             }
         }
-
         return "over a year ago";
     }
 

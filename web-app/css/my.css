@@ -9,11 +9,11 @@
 }
 
 .list-icon {
-    width:10% !important;    
+    width:20% !important;
 }
 
 .list-search {
-    width: 80% !important;
+    width: 60% !important;
 }
 
 .list-search > div.ui-input-text {
@@ -150,7 +150,14 @@ border-radius: 0 0 0 0 !important;
     margin-bottom : 0px;
     padding: 25px;
     height: 12em;
-} 
+}
+.middle-map {
+     margin: -15px;
+     margin-bottom : 0px;
+     padding: 25px;
+     height: 20em;
+}
+
 .big-map {
     margin: -15px;
     margin-bottom : 0px;
@@ -161,3 +168,8 @@ border-radius: 0 0 0 0 !important;
 .list-place a {
     background-color: #DCDCDC;
 }
+
+/*.ui-page {*/
+    /*-webkit-backface-visibility: hidden;*/
+    /*overflow: hidden;*/
+/*}*/
