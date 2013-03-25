@@ -22,5 +22,6 @@
     <access origin="http://maps.gstatic.com" subdomains="true" />
     <access origin="http://maps.google.com" subdomains="true" />
     <access origin="http://3musket33rs.github.com/" subdomains="true" />
+    <access origin="http://placehold.it" subdomains="true" />
 
 </widget>

@@ -66,6 +66,7 @@ threecirclesconfess.view.checkinview = function (model, elements) {
     });
 
     that.model.createdItem.attach(function (data, event) {
+        $("#checkin-submit").removeClass('ui-disabled');
         if (data.item.errors) {
             $.each(data.item.errors, function(index, error) {
                 $('#input-checkin-' + error.field).validationEngine('showPrompt',error.message, 'fail');
@@ -192,6 +193,7 @@ threecirclesconfess.view.checkinview = function (model, elements) {
             event.stopPropagation();
             $('#form-update-checkin').validationEngine('hide');
             if($('#form-update-checkin').validationEngine('validate')) {
+                $(this).addClass('ui-disabled');
                 var placeObj = {name: that.selectedPlace.name, address: that.selectedPlace.address, latitude: that.selectedPlace.lat, longitude: that.selectedPlace.lng};
                 var description = $('#textarea-1').val();
                 var photo = $('#input-checkin-photo');
