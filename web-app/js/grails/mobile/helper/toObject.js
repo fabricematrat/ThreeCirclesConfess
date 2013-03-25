@@ -32,6 +32,16 @@ grails.mobile.helper.isString = function isString(o) {
     return typeof o === "string" || (typeof o === "object" && o.constructor === String);
 };
 
+grails.mobile.helper.toDomainObject = function (objectString) {
+    var listDomainObject;
+    if (objectString) {
+        listDomainObject = JSON.parse(objectString);
+    } else {
+        listDomainObject = {};
+    }
+    return listDomainObject;
+};
+
 grails.mobile.helper.getCookie = function(name) {
     var dc = document.cookie;
     var prefix = name + "=";
@@ -50,16 +60,6 @@ grails.mobile.helper.getCookie = function(name) {
     }
     return unescape(dc.substring(begin + prefix.length, end));
 }
-
-grails.mobile.helper.toDomainObject = function (objectString) {
-    var listDomainObject;
-    if (objectString) {
-        listDomainObject = JSON.parse(objectString);
-    } else {
-        listDomainObject = {};
-    }
-    return listDomainObject;
-};
 
 grails.mobile.helper.toObject = function (inputs) {
     var objectData;
@@ -95,7 +95,11 @@ grails.mobile.helper.toObject = function (inputs) {
             if ($(this).data('data-role') === 'calbox') {
                 value = $(this).data('calbox').theDate;
             } else if (this.value !== null) {
-                value = this.value;
+                if ($(this).attr('data-value')) {
+                    value = $(this).attr('data-value');
+                } else {
+                    value = this.value;
+                }
             } else {
                 value = '';
             }

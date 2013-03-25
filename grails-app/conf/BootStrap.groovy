@@ -4,6 +4,7 @@ import threecircles.UserRole
 import threecircles.Place
 import threecircles.Checkin
 import threecircles.Comment
+import org.grails.datastore.mapping.validation.ValidationErrors
 
 class BootStrap {
 
@@ -15,11 +16,19 @@ class BootStrap {
         def userRole = new Role(authority: 'ROLE_USER').save(flush: true)
 
         def testUser = new User(firstname: "Corinne", lastname: "Krych", username: 'me', enabled: true, password: 'password')
-        testUser.save(flush: true)
+        if( !testUser.save(flush: true)) {
+            ValidationErrors validationErrors = testUser.errors
+            println validationErrors
+            throw NullPointerException()
+        }
         UserRole.create testUser, userRole, true
 
         User fabrice = new User(firstname: "Fabrice", lastname: "Matrat", username: "fabricematrat", password: "password", enabled: true);
-        fabrice.save()
+        if( ! fabrice.save(flush: true)) {
+            ValidationErrors validationErrors = fabrice.errors
+            println validationErrors
+            throw NullPointerException()
+        }
         UserRole.create fabrice, userRole, true
 
         User sebastien = new User(firstname: "Sebastien", lastname: "Blanc", username: "sebastienblanc", password: "password", enabled: true);
@@ -42,6 +51,7 @@ class BootStrap {
         Place wien = new Place(name: "Wein", latitude:48.217349004974416, longitude: 16.407538767645292, address:  "Messe Wien Exhibition & Congress " )
         wien.save()
 
+
         testUser.addToFriends(fabrice)
         testUser.addToFriends(sebastien)
         testUser.save()
@@ -52,13 +62,20 @@ class BootStrap {
             Cool to meet female speaker""", user: testUser)
         comment2.save()
 
-        Checkin confess = new Checkin(description: "confess", when: new Date().time, place: wien, owner: testUser)
+        Checkin confess = new Checkin(description: "confess", when: new Date().time, place: wien, owner: testUser, photo: "")
+
+        if( ! confess.save(flush: true)) {
+            ValidationErrors validationErrors = confess.errors
+            println validationErrors
+            throw NullPointerException()
+        }
+
         confess.save()
         confess.addToFriends(fabrice)
         confess.save()
 
 
-        Checkin devfestw = new Checkin(description: "devfestw", when: (new Date() - 25).time, place: paris, owner: testUser)
+        Checkin devfestw = new Checkin(description: "devfestw", when: (new Date() - 25).time, place: paris, owner: testUser, photo:  "")
         devfestw.save()
         devfestw.addToFriends(fabrice)
         devfestw.addToComments(comment)
@@ -66,7 +83,7 @@ class BootStrap {
 
         devfestw.save()
 
-        Checkin greach = new Checkin(description: "greach", when: (new Date() - 69).time, place: madrid, owner: testUser)
+        Checkin greach = new Checkin(description: "greach", when: (new Date() - 69).time, place: madrid, owner: testUser, photo:  "")
         greach.save()
         greach.addToFriends(fabrice)
         greach.addToComments(comment)

@@ -11,12 +11,11 @@
     <link rel="stylesheet" href="css/my.css"/>
     <link rel="stylesheet" href="css/jquery/validationEngine.jquery.css" type="text/css"/>
     <link rel="stylesheet" href="css/jquery/mobiscroll.custom-2.4.4.min.css" type="text/css"/>
-    <script src="js/jquery/jquery-1.8.3.min.js"></script>
+    <link rel="stylesheet" href="css/html5-mobile.css" type="text/css"/>
+    <script src="js/jquery/jquery-1.9.1.min.js"></script>
     <script src="js/grails/energize.js"></script>
     <script >
     $( document ).on( "mobileinit", function() {
-//        $.mobile.allowCrossDomainPages = true;
-//        $.support.cors = true;
         $.mobile.defaultPageTransition = 'none';
     });
     </script>
@@ -73,12 +72,8 @@
         <div data-role="navbar" data-iconpos="top">
             <ul>
                 <li class="list-icon"><a href="#section-list-checkin" data-icon="arrow-l"></a></li>
-                <!--<li style="width:90%">Check In</li>-->
             </ul>
         </div>
-
-        <!--<a href="#section-list-checkin" data-transition="slide" data-role="button" data-icon="arrow-l" data-iconpos="notext"></a>-->
-
     </div>
     <div data-role="content">
         <div id="map_canvas2" class="map"></div>
@@ -86,6 +81,7 @@
         </ul>
     </div>
 </div>
+
 
 
 <div data-role="page" id="checkin" data-theme="a">
@@ -157,6 +153,7 @@
 <script src="js/grails/mobile/helper/toObject.js"></script>
 <script src="js/grails/mobile/sync/syncmanager.js"></script>
 <script src="js/grails/mobile/push/pushmanager.js"></script>
+    <script src="js/grails/mobile/camera/camera.js"></script>
 <script src="js/grails/mobile/mvc/manager.js"></script>
 <script src="js/threecirclesconfess/view/timeline.js"></script>
 <script src="js/threecirclesconfess/view/geolocation.js"></script>
@@ -173,6 +170,7 @@
 <script src="js/threecirclesconfess/bootstrap/user-bootstrap.js"></script>
 <script src="js/threecirclesconfess/manager-bootstrap.js"></script>
 <script src="js/jquery/mobiscroll.custom-2.4.4.min.js"></script>
+<script src="cordova.js"></script>
 
 </body>
 </html>

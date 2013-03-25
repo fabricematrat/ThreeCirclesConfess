@@ -5,6 +5,8 @@ class Checkin {
     Long when
     Place place
     User owner
+    byte[] photo
+
     static hasMany = [friends:User, comments:Comment]
 
     static mapping = {
@@ -14,5 +16,6 @@ class Checkin {
     }
 
     static constraints = {
+        photo maxSize: 20*1024*1024, nullable: true
     }
 }

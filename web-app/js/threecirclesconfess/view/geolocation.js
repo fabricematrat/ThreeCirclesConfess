@@ -77,6 +77,20 @@ threecirclesconfess.view.geolocation = function () {
             span.append(textarea);
             html.append(span);
             html.append('<div><img src="http://placehold.it/100x50/8e8"/><img src="http://placehold.it/100x50/8e8"/></div>');
+            span = $('<span id="div-for-upload">');
+            var input = $('<input>');
+            input.attr({
+                type: "file",
+                accept:"image/*",
+                "data-role": "none",
+                class: "null upload ui-input-text",
+                name: "photo",
+                id: "input-checkin-photo",
+                onchange: "readURL(this);",
+                onclick: "readURL(this);"
+            });
+            span.append(input);
+            html.append(span);
         } else {
             html = $('#div-bubble');
         }

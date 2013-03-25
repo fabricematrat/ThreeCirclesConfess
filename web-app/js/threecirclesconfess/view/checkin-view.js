@@ -39,7 +39,7 @@ threecirclesconfess.view.checkinview = function (model, elements) {
         }
     });
 
-    $('#submit-user').live('click tap', function (event) {
+    $('#submit-user').on('click', function (event) {
         event.stopPropagation();
         $('#form-update-user').validationEngine('hide');
         if($('#form-update-user').validationEngine('validate')) {
@@ -74,6 +74,7 @@ threecirclesconfess.view.checkinview = function (model, elements) {
         } else if (data.item.message) {
             showGeneralMessage(data, event);
         } else {
+            resetForm('form-update-checkin');
             renderElementCustom(data.item, "just now");
             $('#list-checkin').listview('refresh');
             if (!data.item.NOTIFIED) {
@@ -125,19 +126,16 @@ threecirclesconfess.view.checkinview = function (model, elements) {
     });
 
     // user interface actions
-    that.elements.list.live('pageinit', function (e) {
+    that.elements.list.on('pageinit', function (e) {
         that.listButtonClicked.notify();
         geolocationBackground.showMapBackground('map_canvas', {}) ;
     });
 
-    that.elements.save.live('click tap', function (event) {
+    that.elements.save.on('click', function (event) {
         event.stopPropagation();
         $('#form-update-checkin').validationEngine('hide');
         if($('#form-update-checkin').validationEngine('validate')) {
             var obj = grails.mobile.helper.toObject($('#form-update-checkin').find('input, select'));
-//            var temp = new Date();
-//            obj.when = temp.getTime();
-
             var newElement = {
                 checkin: JSON.stringify(obj)
             };
@@ -149,53 +147,65 @@ threecirclesconfess.view.checkinview = function (model, elements) {
         }
     });
 
-    that.elements.remove.live('click tap', function (event) {
+    that.elements.remove.on('click', function (event) {
         event.stopPropagation();
         that.deleteButtonClicked.notify({ id: $('#input-checkin-id').val() }, event);
     });
 
-    that.elements.add.live('click tap', function (event) {
+    that.elements.add.on('click', function (event) {
         event.stopPropagation();
         that.editButtonClicked.notify();
         createElement();
     });
 
-    that.elements.show.live('click tap', function (event) {
+    var show = function(dataId, event) {
         event.stopPropagation();
         $('#form-update-checkin').validationEngine('hide');
         $('#form-update-checkin').validationEngine({promptPosition: 'bottomLeft'});
         that.editButtonClicked.notify();
-        showElement($(event.currentTarget).attr("data-id"));
-    });
+        showElement(dataId);
+    };
 
     var createElement = function () {
         $.mobile.changePage($('#section-show-checkin'));
     };
-
+    var encode = function (data) {
+        var str = "";
+        for (var i = 0; i < data.length; i++)
+            str += String.fromCharCode(data[i]);
+        return str;
+    };
     var storeLatLng = function(place) {
         that.selectedPlace = place;
     };
 
-    $("#section-show-checkin").live( "pageshow", function (event) {
+    $("#section-show-checkin").on( "pageshow", function (event) {
         geolocationSearch.showMapWithPlaces('map_canvas2', "list-place", storeLatLng);
     });
 
-    $("#checkin").live( "pageshow", function (event) {
+    $("#checkin").on( "pageshow", function (event) {
         geolocationCheckin.showMap('map_canvas3', that.selectedPlace);
     });
 
 
-    $("#checkin-submit").live( "click tap", function (event) {
+    $("#checkin-submit").on( "click", function (event) {
             event.stopPropagation();
             $('#form-update-checkin').validationEngine('hide');
             if($('#form-update-checkin').validationEngine('validate')) {
                 var placeObj = {name: that.selectedPlace.name, address: that.selectedPlace.address, latitude: that.selectedPlace.lat, longitude: that.selectedPlace.lng};
                 var description = $('#textarea-1').val();
-                $('#textarea-1').val('');
-
-                var obj = {description: description, 'owner.id': "1", 'place': placeObj};
-                //grails.mobile.helper.toObject($('#form-update-checkin').find('input, select'));
-                obj.when = new Date().getTime();
+                var photo = $('#input-checkin-photo');
+                var photoValue = "";
+                if (photo.attr('data-value')) {
+                    photoValue = photo.attr('data-value');
+                }
+                var obj = {
+                    description: description,
+                    'owner.id': "1",
+                    place: placeObj,
+                    when: new Date().getTime(),
+                    photo: photoValue
+                };
                 var newElement = {
                     checkin: JSON.stringify(obj)
                 };
@@ -249,6 +259,9 @@ threecirclesconfess.view.checkinview = function (model, elements) {
             var input = $('#input-checkin-' + name);
             if (input.attr('type') != 'file') {
                 input.val(value);
+            } else {
+                var img = encode(value);
+                input.parent().css('background-image', 'url("' + img + '")');
             }
             if (input.attr('data-type') == 'date') {
                 input.scroller('setDate', (value === '') ? '' : new Date(value), true);
@@ -259,6 +272,8 @@ threecirclesconfess.view.checkinview = function (model, elements) {
     };
 
     var resetForm = function (form) {
+        $('#textarea-1').val('');
+        $('#input-checkin-photo').parent().css('background-image', 'url("images/camera.png")');
         $('input[data-type="date"]').each(function() {
             $(this).scroller('destroy').scroller({
                 preset: 'date',
@@ -269,16 +284,18 @@ threecirclesconfess.view.checkinview = function (model, elements) {
             });
         });
         var div = $("#" + form);
-        if ($("#" + form)[0]) {
-            $("#" + form)[0].reset();
+        if(div && div[0]) {
+            div[0].reset();
+            $.each(div.find('input:hidden'), function(id, input) {
+                if ($(input).attr('type') != 'file') {
+                    $(input).val('');
+                } else {
+                    $(input).parent().css('background-image', 'url("images/camera.png")');
+                }
+            });
         }
-        $.each(div.find('input:hidden'), function(id, input) {
-            if ($(input).attr('type') != 'file') {
-                $(input).val('');
-            }
-        });
     };
-
+    
 
     var refreshSelectDropDown = function (select, newOptions) {
         var options = null;
@@ -334,6 +351,13 @@ threecirclesconfess.view.checkinview = function (model, elements) {
             'data-transition': 'fade'
         });
         a.text(getText(element));
+        a.on('click', function(event) {
+            show(element.id, event);
+        });
+        
+        var image = '<img src="'+ encode(element.photo) +'"/>';
+        a.append(image);
+        
         if (element.offlineStatus === 'NOT-SYNC') {
             li =  $('<li>').attr({'data-theme': 'e'});
             li.append(a);
@@ -360,8 +384,17 @@ threecirclesconfess.view.checkinview = function (model, elements) {
 
         });
         html += '</div>';
-
-        html += '<img class="mainimage" src="http://placehold.it/640x480/88e" />';
+        if(element.photo) {
+            var base64 = encode(element.photo);
+            //var img = $('<img>');
+//            img.attr({
+//                class: "mainimage",
+//                src: 'url(' + base64 + ')'
+//            });
+//            html += $(html).append(img).html();
+//
+            html += '<img class="mainimage" src="' + base64 + '"/>';
+        }
 
         html +='<span class="date">' + timelineDate + '</span><a class="commentbutton"><img src="img/comments.png"/></a><a class="likebutton"><img src="img/like.png"/></a>' +
         '</div>';

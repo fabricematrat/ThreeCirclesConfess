@@ -74,11 +74,11 @@ threecirclesconfess.view.commentview = function (model, elements) {
     });
 
     // user interface actions
-    that.elements.list.live('pageinit', function (e) {
+    that.elements.list.on('pageinit', function (e) {
         that.listButtonClicked.notify();
     });
 
-    that.elements.save.live('click tap', function (event) {
+    that.elements.save.on('click', function (event) {
         event.stopPropagation();
         $('#form-update-comment').validationEngine('hide');
         if($('#form-update-comment').validationEngine('validate')) {
@@ -94,12 +94,12 @@ threecirclesconfess.view.commentview = function (model, elements) {
         }
     });
 
-    that.elements.remove.live('click tap', function (event) {
+    that.elements.remove.on('click', function (event) {
         event.stopPropagation();
         that.deleteButtonClicked.notify({ id: $('#input-comment-id').val() }, event);
     });
 
-    that.elements.add.live('click tap', function (event) {
+    that.elements.add.on('click', function (event) {
         event.stopPropagation();
         $('#form-update-comment').validationEngine('hide');
         $('#form-update-comment').validationEngine({promptPosition: 'bottomLeft'});
@@ -107,18 +107,26 @@ threecirclesconfess.view.commentview = function (model, elements) {
         createElement();
     });
 
-    that.elements.show.live('click tap', function (event) {
+    var show = function(dataId, event) {
         event.stopPropagation();
         $('#form-update-comment').validationEngine('hide');
         $('#form-update-comment').validationEngine({promptPosition: 'bottomLeft'});
         that.editButtonClicked.notify();
-        showElement($(event.currentTarget).attr("data-id"));
-    });
+        showElement(dataId);
+    };
 
     var createElement = function () {
         resetForm('form-update-comment');
         $.mobile.changePage($('#section-show-comment'));
         $('#delete-comment').css('display', 'none');
+    };
+
+
+    var encode = function (data) {
+        var str = "";
+        for (var i = 0; i < data.length; i++)
+            str += String.fromCharCode(data[i]);
+        return str;
     };
 
     var showElement = function (id) {
@@ -137,6 +145,9 @@ threecirclesconfess.view.commentview = function (model, elements) {
             var input = $('#input-comment-' + name);
             if (input.attr('type') != 'file') {
                 input.val(value);
+            } else {
+                var img = encode(value);
+                input.parent().css('background-image', 'url("' + img + '")');
             }
             if (input.attr('data-type') == 'date') {
                 input.scroller('setDate', (value === '') ? '' : new Date(value), true);
@@ -157,12 +168,16 @@ threecirclesconfess.view.commentview = function (model, elements) {
             });
         });
         var div = $("#" + form);
-        $("#" + form)[0].reset();
-        $.each(div.find('input:hidden'), function(id, input) {
-            if ($(input).attr('type') != 'file') {
-                $(input).val('');
-            }
-        });
+        if(div) {
+            div[0].reset();
+            $.each(div.find('input:hidden'), function(id, input) {
+                if ($(input).attr('type') != 'file') {
+                    $(input).val('');
+                } else {
+                    $(input).parent().css('background-image', 'url("images/camera.png")');
+                }
+            });
+        }
     };
     
 
@@ -173,11 +188,13 @@ threecirclesconfess.view.commentview = function (model, elements) {
         } else {
             options = select.attr('options');
         }
-        $('option', select).remove();
-        $.each(newOptions, function(val, text) {
-            options[options.length] = new Option(text, val);
-        });
-        select.val(options[0]);
+        if (options) {
+            $('option', select).remove();
+            $.each(newOptions, function(val, text) {
+                options[options.length] = new Option(text, val);
+            });
+            select.val(options[0]);
+        }
     };
 
     var renderDependentList = function (dependentName, items) {
@@ -218,6 +235,10 @@ threecirclesconfess.view.commentview = function (model, elements) {
             'data-transition': 'fade'
         });
         a.text(getText(element));
+        a.on('click', function(event) {
+            show(element.id, event);
+        });
+        
         if (element.offlineStatus === 'NOT-SYNC') {
             li =  $('<li>').attr({'data-theme': 'e'});
             li.append(a);

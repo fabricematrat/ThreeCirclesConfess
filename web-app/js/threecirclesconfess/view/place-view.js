@@ -70,11 +70,11 @@ threecirclesconfess.view.placeview = function (model, elements) {
     });
 
     // user interface actions
-    $('#section-list-place').live('pageshow', function() {
+    $('#section-list-place').on('pageshow', function() {
         mapServiceList.refreshCenterZoomMap();
     });
 
-    $('#section-show-place').live('pageshow', function() {
+    $('#section-show-place').on('pageshow', function() {
         if($('#input-place-id').val() === ''){
             navigator.geolocation.getCurrentPosition(function (position) {
                 var coord = {
@@ -89,20 +89,20 @@ threecirclesconfess.view.placeview = function (model, elements) {
         }
     });
 
-    $('#list-all-place').live('click tap', function (e, ui) {
+    $('#list-all-place').on('click', function (e, ui) {
         hideMapDisplay();
         showListDisplay();
     });
 
-    $('#map-all-place').live('click tap', function (e, ui) {
+    $('#map-all-place').on('click', function (e, ui) {
         hideListDisplay();
         showMapDisplay();
     });
-    that.elements.list.live('pageinit', function (e) {
+    that.elements.list.on('pageinit', function (e) {
         that.listButtonClicked.notify();
     });
 
-    that.elements.save.live('click tap', function (event) {
+    that.elements.save.on('click', function (event) {
         event.stopPropagation();
         $('#form-update-place').validationEngine('hide');
         if($('#form-update-place').validationEngine('validate')) {
@@ -118,29 +118,37 @@ threecirclesconfess.view.placeview = function (model, elements) {
         }
     });
 
-    that.elements.remove.live('click tap', function (event) {
+    that.elements.remove.on('click', function (event) {
         event.stopPropagation();
         that.deleteButtonClicked.notify({ id: $('#input-place-id').val() }, event);
     });
 
-    that.elements.add.live('click tap', function (event) {
+    that.elements.add.on('click', function (event) {
         event.stopPropagation();
         $('#form-update-place').validationEngine('hide');
         $('#form-update-place').validationEngine({promptPosition: 'bottomLeft'});
         createElement();
     });
 
-    that.elements.show.live('click tap', function (event) {
+    var show = function(dataId, event) {
         event.stopPropagation();
         $('#form-update-place').validationEngine('hide');
         $('#form-update-place').validationEngine({promptPosition: 'bottomLeft'});
-        showElement($(event.currentTarget).attr("data-id"));
-    });
+        showElement(dataId);
+    };
 
     var createElement = function () {
         resetForm('form-update-place');
         $.mobile.changePage($('#section-show-place'));
         $('#delete-place').css('display', 'none');
+    };
+
+
+    var encode = function (data) {
+        var str = "";
+        for (var i = 0; i < data.length; i++)
+            str += String.fromCharCode(data[i]);
+        return str;
     };
 
     var showElement = function (id) {
@@ -150,6 +158,9 @@ threecirclesconfess.view.placeview = function (model, elements) {
             var input = $('#input-place-' + name);
             if (input.attr('type') != 'file') {
                 input.val(value);
+            } else {
+                var img = encode(value);
+                input.parent().css('background-image', 'url("' + img + '")');
             }
             if (input.attr('data-type') == 'date') {
                 input.scroller('setDate', (value === '') ? '' : new Date(value), true);
@@ -175,12 +186,16 @@ threecirclesconfess.view.placeview = function (model, elements) {
             });
         });
         var div = $("#" + form);
-        $("#" + form)[0].reset();
-        $.each(div.find('input:hidden'), function(id, input) {
-            if ($(input).attr('type') != 'file') {
-                $(input).val('');
-            }
-        });
+        if(div) {
+            div[0].reset();
+            $.each(div.find('input:hidden'), function(id, input) {
+                if ($(input).attr('type') != 'file') {
+                    $(input).val('');
+                } else {
+                    $(input).parent().css('background-image', 'url("images/camera.png")');
+                }
+            });
+        }
     };
     
     var hideListDisplay = function () {
@@ -208,6 +223,10 @@ threecirclesconfess.view.placeview = function (model, elements) {
             'data-transition': 'fade'
         });
         a.text(getText(element));
+        a.on('click', function(event) {
+            show(element.id, event);
+        });
+        
         if (element.offlineStatus === 'NOT-SYNC') {
             li =  $('<li>').attr({'data-theme': 'e'});
             li.append(a);

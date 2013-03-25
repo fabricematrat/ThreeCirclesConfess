@@ -50,11 +50,6 @@ grails.mobile.mvc.controller = function (feed, model, view) {
         createItem(item, context);
     });
 
-    view.loginButtonClicked.attach(function (item, context) {
-        login(item, context);
-    });
-
-
     view.updateButtonClicked.attach(function (item, context) {
         updateItem(item, context);
     });
@@ -95,13 +90,6 @@ grails.mobile.mvc.controller = function (feed, model, view) {
         if ($.isEmptyObject(that.model.getItems())) {
             var list = feed.listItems(listed);
         }
-    };
-
-    var login = function (data, context) {
-        var logged = function (data) {
-            return that.model.login(data, context);
-        };
-        feed.login(data, logged);
     };
 
     var createItem = function (data, context) {
